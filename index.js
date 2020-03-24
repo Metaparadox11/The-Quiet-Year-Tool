@@ -9,8 +9,9 @@ app.use('/static', express.static(__dirname + '/static'));// Routing
 app.get('/', function(request, response) {
   response.sendFile(path.join(__dirname, '/static/index.html'));
 });// Starts the server.
-server.listen(5000, function() {
-  console.log('Starting server on port 5000');
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Our app is running on port ${ PORT }`);
 });
 
 // Add the WebSocket handlers
