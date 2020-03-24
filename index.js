@@ -3,11 +3,11 @@ var express = require('express');
 var http = require('http');
 var path = require('path');
 var socketIO = require('socket.io');
-var app = express();
+const app = express();
 //var server = http.Server(app);
 //var io = socketIO(server);
-var server = http.createServer(app);
-var io = socketIO.listen(server);
+const server = http.createServer(app);
+const io = require('socket.io')(server);
 const PORT = process.env.PORT || 3000;
 app.set('port', PORT);
 app.use('/static', express.static(__dirname + '/static'));// Routing
@@ -16,7 +16,7 @@ app.get('/', function(request, response) {
   //response.sendFile(path.join(__dirname, '/index.html'));
 });// Starts the server.
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
     console.log(`Our app is running on port ${ PORT }`);
 });
 
