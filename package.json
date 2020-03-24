@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/Metaparadox11/The-Quiet-Year-Tool#readme",
   "dependencies": {
+    "canvas": "^2.6.1",
     "express": "^4.17.1",
     "fabric": "^3.6.3",
     "socket.io": "^2.3.0"

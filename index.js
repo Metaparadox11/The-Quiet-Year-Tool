@@ -2,6 +2,7 @@
 var express = require('express');
 var fs = require('fs');
 var fabric = require('fabric').fabric;
+const canvas = require('canvas');
 var http = require('http');
 var path = require('path');
 var socketIO = require('socket.io');
