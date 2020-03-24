@@ -2,18 +2,21 @@
 var express = require('express');
 var http = require('http');
 var path = require('path');
-var socketIO = require('socket.io');var app = express();
+var socketIO = require('socket.io');
+var app = express();
 var server = http.Server(app);
 var io = socketIO(server);
+const PORT = process.env.PORT || 3000;
+app.set('port', PORT);
 app.use('/static', express.static(__dirname + '/static'));// Routing
 app.get('/', function(request, response) {
   response.sendFile(path.join(__dirname, '/static/index.html'));
 });// Starts the server.
-const PORT = process.env.PORT || 3000;
+
 app.listen(PORT, () => {
     console.log(`Our app is running on port ${ PORT }`);
 });
-app.set('port', PORT);
+
 // Add the WebSocket handlers
 var players = {};
 io.on('connection', function(socket) {
