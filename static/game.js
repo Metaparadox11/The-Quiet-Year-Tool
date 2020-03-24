@@ -15,9 +15,9 @@ var clicked = {
 
 document.addEventListener('mousedown', function(event) {
   event = event || window.event;
-  //pos.x = event.pageX;
-  //pos.y = event.pageY;
-  //socket.emit('pos', pos);
+  pos.xold = event.pageX;
+  pos.yold = event.pageY;
+  socket.emit('pos', pos);
   clicked.c = true;
 });
 document.addEventListener('mousemove', function(event) {
