@@ -1,6 +1,7 @@
 // Dependencies
 var express = require('express');
-//var fabric = require('fabric');
+var fs = require('fs');
+var fabric = require('fabric').fabric;
 var http = require('http');
 var path = require('path');
 var socketIO = require('socket.io');
