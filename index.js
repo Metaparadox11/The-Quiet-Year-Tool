@@ -4,8 +4,10 @@ var http = require('http');
 var path = require('path');
 var socketIO = require('socket.io');
 var app = express();
-var server = http.Server(app);
-var io = socketIO(server);
+//var server = http.Server(app);
+//var io = socketIO(server);
+var server = http.createServer(app);
+var io = socketIO.listen(server);
 const PORT = process.env.PORT || 3000;
 app.set('port', PORT);
 app.use('/static', express.static(__dirname + '/static'));// Routing
@@ -19,7 +21,7 @@ app.listen(PORT, () => {
 
 // Add the WebSocket handlers
 var players = {};
-io.on('connection', function(socket) {
+io.sockets.on('connection', function(socket) {
   socket.on('new player', function() {
     players[socket.id] = {
       x: 0,
