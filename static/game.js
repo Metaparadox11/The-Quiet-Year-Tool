@@ -67,10 +67,11 @@ socket.on('state', function(players) {
             player.y = pos.y;
         }
         context.moveTo(player.xold, player.yold);
-        context.lineTo(pos.x, pos.y);
+        //context.lineTo(pos.x, pos.y);
+        context.lineTo(player.x, player.y);
         context.stroke();
-        pos.xold = pos.x;
-        pos.yold = pos.y;
+        pos.xold = player.x;
+        pos.yold = player.y;
         socket.emit('pos', pos);
     }
   }
