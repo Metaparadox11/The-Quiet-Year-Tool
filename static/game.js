@@ -72,6 +72,8 @@ socket.on('state', function(players) {
         context.stroke();
         pos.xold = player.x;
         pos.yold = player.y;
+        pos.x = player.x;
+        pos.y = player.y;
         socket.emit('pos', pos);
     }
   }
