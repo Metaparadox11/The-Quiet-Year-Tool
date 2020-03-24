@@ -70,10 +70,8 @@ socket.on('state', function(players) {
         //context.lineTo(pos.x, pos.y);
         context.lineTo(player.x, player.y);
         context.stroke();
-        pos.xold = player.x;
-        pos.yold = player.y;
-        pos.x = player.x;
-        pos.y = player.y;
+        pos.xold = pos.x;
+        pos.yold = pos.y;
         socket.emit('pos', pos);
     }
   }
