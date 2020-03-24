@@ -42,7 +42,10 @@ setInterval(function() {
   socket.emit('clicked', clicked);
 }, 10);
 
-var canvas = document.getElementById('canvas');
+//var canvas = document.getElementById('canvas');
+var canvas = new fabric.Canvas('canvas', {
+    isDrawingMode: true
+});
 canvas.width = 800;
 canvas.height = 600;
 var context = canvas.getContext('2d');
