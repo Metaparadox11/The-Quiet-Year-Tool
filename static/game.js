@@ -15,9 +15,9 @@ var clicked = {
 
 document.addEventListener('mousedown', function(event) {
   event = event || window.event;
-  pos.x = event.pageX;
-  pos.y = event.pageY;
-  socket.emit('pos', pos);
+  //pos.x = event.pageX;
+  //pos.y = event.pageY;
+  //socket.emit('pos', pos);
   clicked.c = true;
 });
 document.addEventListener('mousemove', function(event) {
@@ -70,8 +70,8 @@ socket.on('state', function(players) {
         //context.lineTo(pos.x, pos.y);
         context.lineTo(player.x, player.y);
         context.stroke();
-        pos.xold = pos.x;
-        pos.yold = pos.y;
+        pos.xold = player.x;
+        pos.yold = player.y;
         socket.emit('pos', pos);
     }
   }
