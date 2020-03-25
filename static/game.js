@@ -120,20 +120,23 @@ function loadCards() {
 }
 window.onload = loadCards;
 
+function addCardButton() {
+    var button = document.createElement("button");
+    button.innerHTML = "Draw Card";
 
-var button = document.createElement("button");
-button.innerHTML = "Draw Card";
+    var body = document.getElementsByTagName("body")[0];
 
-var body = document.getElementsByTagName("body")[0];
+    var divLeft = document.getElementById("divleft");
 
-var divLeft = document.getElementById("divleft");
+    var divRight = document.getElementById("divright");
+    divRight.appendChild(button);
 
-var divRight = document.getElementById("divright");
-divRight.appendChild(button);
+    var br = document.createElement("div");
+    br.innerHTML = "<br><br>";
+    divRight.appendChild(br);
+}
 
-var br = document.createElement("div");
-br.innerHTML = "<br><br>";
-divRight.appendChild(br);
+window.onload = addCardButton;
 
 const DRAW_ONE = '/draw/?count=1';
 
