@@ -87,9 +87,7 @@ var diamondsRemaining = 13;
 
 axios.get(ENTIRE_API_URL_HEARTS)
     .then(response => {
-        if (response.success) {
-            heartsID = response.deck_id;
-        }
+        heartsID = response.deck_id;
     })
     .catch(error => console.log('Error', error));
 
@@ -125,10 +123,10 @@ var body = document.getElementsByTagName("body")[0];
 body.appendChild(button);
 
 const DRAW_ONE = '/draw/?count=1';
-const ENTIRE_API_URL_DRAW_HEARTS = API_URL + heartsID + DRAW_ONE;
 
 
 button.addEventListener ("click", function() {
+    const ENTIRE_API_URL_DRAW_HEARTS = API_URL + heartsID + DRAW_ONE;
     axios.get(ENTIRE_API_URL_DRAW_HEARTS)
         .then(response => {
             if (response.success) {
