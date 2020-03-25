@@ -164,8 +164,7 @@ button.addEventListener ("click", function() {
                 if (response.data.success) {
                     var imageURL = response.data.cards[0].image;
                     if (cardImageShown){
-                        var cardImage = document.getElementByID('cardimage');
-                        cardImage.src = imageURL;
+                        document.getElementByID('cardimage').src = imageURL;
                     } else {
                         var img = document.createElement('img');
                         img.src = imageURL;
