@@ -120,23 +120,31 @@ function loadCards() {
 }
 window.onload = loadCards;
 
+// Not working????
 function addCardButton() {
     var button = document.createElement("button");
     button.innerHTML = "Draw Card";
 
-    var body = document.getElementsByTagName("body")[0];
-
-    var divLeft = document.getElementById("divleft");
+    var br = document.createElement("div");
+    br.innerHTML = "<br><br>";
+    divRight.appendChild(br);
 
     var divRight = document.getElementById("divright");
     divRight.appendChild(button);
 
-    var br = document.createElement("div");
-    br.innerHTML = "<br><br>";
-    divRight.appendChild(br);
+    var br2 = document.createElement("div");
+    br2.innerHTML = "<br><br>";
+    divRight.appendChild(br2);
 }
 
-window.onload = addCardButton;
+//window.onload = addCardButton;
+
+
+var body = document.getElementsByTagName("body")[0];
+var divRight = document.getElementById('divright');
+var divLeft = document.getElementById('divleft');
+
+var button = document.getElementById('but');
 
 const DRAW_ONE = '/draw/?count=1';
 
@@ -156,7 +164,7 @@ button.addEventListener ("click", function() {
                 if (response.data.success) {
                     var imageURL = response.data.cards[0].image;
                     if (cardImageShown){
-                        var cardImage = document.getElementByID("cardimage");
+                        var cardImage = document.getElementByID('cardimage');
                         cardImage.src = imageURL;
                     } else {
                         var img = document.createElement('img');
@@ -166,7 +174,7 @@ button.addEventListener ("click", function() {
                         img.onload = function(){
                             this.style.position = 'relative'
                             this.style.left = 50%;
-                            this.style.top = 50%;
+                            this.style.top = 25%;
                         }
                         divRight.appendChild(img);
                         cardImageShow = true;
