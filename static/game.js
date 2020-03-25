@@ -55,27 +55,7 @@ socket.on('state', function(players) {
     var player = players[id];
     if (player.c) {
         console.log('drawing');
-        context.beginPath();
-        context.lineWidth = "3";
-        context.lineJoin = "round";
-        context.strokeStyle = "green";
-        if (player.xold == -1) {
-            pos.xold = pos.x;
-            pos.yold = pos.y;
-            player.xold = pos.x;
-            player.yold = pos.y;
-        }
-        if (player.x == -1) {
-            player.x = pos.x;
-            player.y = pos.y;
-        }
-        context.moveTo(player.xold, player.yold);
-        //context.lineTo(pos.x, pos.y);
-        context.lineTo(player.x, player.y);
-        context.stroke();
-        pos.xold = player.x;
-        pos.yold = player.y;
-        socket.emit('pos', pos);
+        
     }
   }
 });
