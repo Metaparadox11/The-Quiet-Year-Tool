@@ -134,7 +134,7 @@ button.addEventListener ("click", function() {
     axios.get(ENTIRE_API_URL_DRAW_HEARTS)
         .then(response => {
             if (response.data.success) {
-                var imageURL = response.data.cards.image;
+                var imageURL = response.data.cards[0].image;
                 var img = document.createElement('img');
                 img.src = imageURL;
                 body.appendChild(img);
