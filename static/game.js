@@ -130,7 +130,7 @@ const DRAW_ONE = '/draw/?count=1';
 
 
 button.addEventListener ("click", function() {
-    const ENTIRE_API_URL_DRAW_HEARTS = API_URL + heartsID + DRAW_ONE;
+    const ENTIRE_API_URL_DRAW_HEARTS = API_URL + ids.hearts + DRAW_ONE;
     axios.get(ENTIRE_API_URL_DRAW_HEARTS)
         .then(response => {
             if (response.success) {
