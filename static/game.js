@@ -172,7 +172,7 @@ button.addEventListener ("click", function() {
                         img.width = 30;
                         img.id  = 'cardimage';
                         img.onload = function(){
-                            this.style.position = 'relative'
+                            this.style.position = 'relative';
                             this.style.left = 50%;
                             this.style.top = 25%;
                         }
