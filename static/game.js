@@ -1,3 +1,5 @@
+const axios = require('axios');
+
 var socket = io();
 socket.on('message', function(data) {
   console.log(data);
@@ -44,10 +46,8 @@ setInterval(function() {
 
 //var canvas = document.getElementById('canvas');
 var canvas = new fabric.Canvas('canvas', {
-    isDrawingMode: true
+    isDrawingMode: false
 });
-canvas.width = 2000;
-canvas.height = 600;
 var context = canvas.getContext('2d');
 socket.on('state', function(players) {
   context.fillStyle = 'white';
@@ -55,7 +55,90 @@ socket.on('state', function(players) {
     var player = players[id];
     if (player.c) {
         console.log('drawing');
-        
+
     }
   }
+});
+
+// API specific settings.
+const API_URL = 'https://deckofcardsapi.com/api/deck/';
+
+const NEW_SHUFFLED_DECK = 'new/shuffle/';
+
+const HEARTS_CARDS = '?cards=AH,2H,3H,4H,5H,6H,7H,8H,9H,10H,JH,QH,KH';
+const SPADES_CARDS = '?cards=AS,2S,3S,4S,5S,6S,7S,8S,9S,10S,JS,QS,KS';
+const CLUBS_CARDS = '?cards=AC,2C,3C,4C,5C,6C,7C,8C,9C,10C,JC,QC,KC';
+const DIAMONDS_CARDS = '?cards=AD,2D,3D,4D,5D,6D,7D,8D,9D,10D,JD,QD,KD';
+
+const ENTIRE_API_URL_HEARTS = '${API_URL}${NEW_SHUFFLED_DECK}${HEARTS_CARDS}';
+const ENTIRE_API_URL_SPADES = '${API_URL}${NEW_SHUFFLED_DECK}${SPADES_CARDS}';
+const ENTIRE_API_URL_CLUBS = '${API_URL}${NEW_SHUFFLED_DECK}${CLUBS_CARDS}';
+const ENTIRE_API_URL_DIAMONDS = '${API_URL}${NEW_SHUFFLED_DECK}${DIAMONDS_CARDS}';
+
+var heartsID = '';
+var heartsRemaining = 13;
+
+var spadesID = '';
+var spadesRemaining = 13;
+
+var clubsID = '';
+var clubsRemaining = 13;
+
+var diamondsID = '';
+var diamondsRemaining = 13;
+
+axios.get(ENTIRE_API_URL_HEARTS)
+    .then(response => {
+        if (response.success) {
+            heartsID = response.deck_id;
+        }
+    })
+    .catch(error => console.log('Error', error));
+
+axios.get(ENTIRE_API_URL_SPADES)
+    .then(response => {
+        if (response.success) {
+            spadesID = response.deck_id;
+        }
+    })
+    .catch(error => console.log('Error', error));
+
+axios.get(ENTIRE_API_URL_CLUBS)
+    .then(response => {
+        if (response.success) {
+            clubsID = response.deck_id;
+        }
+    })
+    .catch(error => console.log('Error', error));
+
+axios.get(ENTIRE_API_URL_DIAMONDS)
+    .then(response => {
+        if (response.success) {
+            diamondsID = response.deck_id;
+        }
+    })
+    .catch(error => console.log('Error', error));
+
+
+var button = document.createElement("button");
+button.innerHTML = "Draw Card";
+
+var body = document.getElementsByTagName("body")[0];
+body.appendChild(button);
+
+const DRAW_ONE = '/draw/?count=1';
+const ENTIRE_API_URL_HEARTS = '${API_URL}${heartsID}${DRAW_ONE}';
+
+
+button.addEventListener ("click", function() {
+    axios.get(ENTIRE_API_URL_DRAW_HEARTS)
+        .then(response => {
+            if (response.success) {
+                var imageURL = response.cards.image;
+                var img = document.createElement('img');
+                img.src = imageURL;
+                body.appendChild(img);
+            }
+        })
+        .catch(error => console.log('Error', error));
 });
