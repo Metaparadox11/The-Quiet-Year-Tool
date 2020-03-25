@@ -46,7 +46,7 @@ setInterval(function() {
 var canvas = new fabric.Canvas('canvas', {
     isDrawingMode: true
 });
-canvas.width = 800;
+canvas.width = 2000;
 canvas.height = 600;
 var context = canvas.getContext('2d');
 socket.on('state', function(players) {
