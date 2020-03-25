@@ -95,7 +95,7 @@ function loadCards() {
 
     axios.get(ENTIRE_API_URL_SPADES)
         .then(response => {
-            if (response.success) {
+            if (response.data.success) {
                 ids.spades = response.data.deck_id;
             }
         })
@@ -103,7 +103,7 @@ function loadCards() {
 
     axios.get(ENTIRE_API_URL_CLUBS)
         .then(response => {
-            if (response.success) {
+            if (response.data.success) {
                 ids.clubs = response.data.deck_id;
             }
         })
@@ -111,7 +111,7 @@ function loadCards() {
 
     axios.get(ENTIRE_API_URL_DIAMONDS)
         .then(response => {
-            if (response.success) {
+            if (response.data.success) {
                 ids.diamonds = response.data.deck_id;
             }
         })
@@ -133,7 +133,7 @@ button.addEventListener ("click", function() {
     const ENTIRE_API_URL_DRAW_HEARTS = API_URL + ids.hearts + DRAW_ONE;
     axios.get(ENTIRE_API_URL_DRAW_HEARTS)
         .then(response => {
-            if (response.success) {
+            if (response.data.success) {
                 var imageURL = response.data.cards.image;
                 var img = document.createElement('img');
                 img.src = imageURL;
