@@ -125,11 +125,20 @@ var button = document.createElement("button");
 button.innerHTML = "Draw Card";
 
 var body = document.getElementsByTagName("body")[0];
-body.appendChild(button);
+
+var divLeft = document.getElementById("divleft");
+
+var divRight = document.getElementsById("divright");
+divRight.appendChild(button);
+
+var br = document.createElement("div");
+br.innerHTML = "<br><br>";
+divRight.appendChild(br);
 
 const DRAW_ONE = '/draw/?count=1';
 
 var frostShepherds = false;
+var cardImageShown = false;
 var fsCode = 'KS';
 
 button.addEventListener ("click", function() {
@@ -143,10 +152,21 @@ button.addEventListener ("click", function() {
             .then(response => {
                 if (response.data.success) {
                     var imageURL = response.data.cards[0].image;
-                    var img = document.createElement('img');
-                    img.src = imageURL;
-                    img.width = 30;
-                    body.appendChild(img);
+                    if (cardImageShown){
+                        var cardImage = document.getElementByID("cardimage");
+                        cardImage.src = imageURL;
+                    } else {
+                        var img = document.createElement('img');
+                        img.src = imageURL;
+                        img.width = 30;
+                        img.id  = 'cardimage';
+                        img.onload = function(){
+                            this.style.position = 'relative'
+                            this.style.left = 50%;
+                            this.style.top = 50%;
+                        }
+                        divRight.appendChild(img);
+                    }
                 }
                 heartsRemaining = response.data.remaining;
             })
@@ -160,7 +180,7 @@ button.addEventListener ("click", function() {
                         var img = document.createElement('img');
                         img.src = imageURL;
                         img.width = 30;
-                        body.appendChild(img);
+                        divRight.appendChild(img);
                     }
                     diamondsRemaining = response.data.remaining;
                 })
@@ -174,7 +194,7 @@ button.addEventListener ("click", function() {
                             var img = document.createElement('img');
                             img.src = imageURL;
                             img.width = 30;
-                            body.appendChild(img);
+                            divRight.appendChild(img);
                         }
                         clubsRemaining = response.data.remaining;
                     })
@@ -189,7 +209,7 @@ button.addEventListener ("click", function() {
                                     var img = document.createElement('img');
                                     img.src = imageURL;
                                     img.width = 30;
-                                    body.appendChild(img);
+                                    divRight.appendChild(img);
                                     if (response.data.cards[0].code == fsCode) {
                                         frostShepherds = true;
                                     }
