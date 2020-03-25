@@ -177,7 +177,7 @@ button.addEventListener ("click", function() {
                             this.style.top = '25%';
                         }
                         divRight.appendChild(img);
-                        cardImageShow = true;
+                        cardImageShown = true;
                     }
                 }
                 heartsRemaining = response.data.remaining;
