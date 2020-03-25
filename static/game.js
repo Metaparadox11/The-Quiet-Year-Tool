@@ -157,7 +157,7 @@ button.addEventListener ("click", function() {
     const ENTIRE_API_URL_DRAW_SPADES = API_URL + ids.spades + DRAW_ONE;
     const ENTIRE_API_URL_DRAW_CLUBS = API_URL + ids.clubs + DRAW_ONE;
     const ENTIRE_API_URL_DRAW_DIAMONDS = API_URL + ids.diamonds + DRAW_ONE;
-
+    console.log('Clicked');
     if (heartsRemaining > 0) {
         axios.get(ENTIRE_API_URL_DRAW_HEARTS)
             .then(response => {
@@ -173,8 +173,8 @@ button.addEventListener ("click", function() {
                         img.id  = 'cardimage';
                         img.onload = function(){
                             this.style.position = 'relative';
-                            this.style.left = 50%;
-                            this.style.top = 25%;
+                            this.style.left = '50%';
+                            this.style.top = '25%';
                         }
                         divRight.appendChild(img);
                         cardImageShow = true;
