@@ -3,6 +3,7 @@ var express = require('express');
 const fs = require('fs');
 const canvas = require('canvas');
 const fabric = require('fabric').fabric;
+const axios = require('axios');
 var http = require('http');
 var path = require('path');
 var socketIO = require('socket.io');

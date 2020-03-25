@@ -1,5 +1,3 @@
-const axios = require('axios');
-
 var socket = io();
 socket.on('message', function(data) {
   console.log(data);
