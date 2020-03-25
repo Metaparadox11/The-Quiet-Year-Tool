@@ -73,47 +73,51 @@ const ENTIRE_API_URL_SPADES = API_URL + NEW_SHUFFLED_DECK + SPADES_CARDS;
 const ENTIRE_API_URL_CLUBS = API_URL + NEW_SHUFFLED_DECK + CLUBS_CARDS;
 const ENTIRE_API_URL_DIAMONDS = API_URL + NEW_SHUFFLED_DECK + DIAMONDS_CARDS;
 
-var heartsID = '';
+var ids = {
+    hearts: '',
+    spades: '',
+    clubs: '',
+    diamonds: ''
+}
+
 var heartsRemaining = 13;
-
-var spadesID = '';
 var spadesRemaining = 13;
-
-var clubsID = '';
 var clubsRemaining = 13;
-
-var diamondsID = '';
 var diamondsRemaining = 13;
 
-axios.get(ENTIRE_API_URL_HEARTS)
-    .then(response => {
-        heartsID = response.deck_id;
-    })
-    .catch(error => console.log('Error', error));
+function loadCards() {
+    axios.get(ENTIRE_API_URL_HEARTS)
+        .then(response => {
+            ids.hearts = response.deck_id;
+            console.log(ids.hearts);
+        })
+        .catch(error => console.log('Error', error));
 
-axios.get(ENTIRE_API_URL_SPADES)
-    .then(response => {
-        if (response.success) {
-            spadesID = response.deck_id;
-        }
-    })
-    .catch(error => console.log('Error', error));
+    axios.get(ENTIRE_API_URL_SPADES)
+        .then(response => {
+            if (response.success) {
+                ids.spades = response.deck_id;
+            }
+        })
+        .catch(error => console.log('Error', error));
 
-axios.get(ENTIRE_API_URL_CLUBS)
-    .then(response => {
-        if (response.success) {
-            clubsID = response.deck_id;
-        }
-    })
-    .catch(error => console.log('Error', error));
+    axios.get(ENTIRE_API_URL_CLUBS)
+        .then(response => {
+            if (response.success) {
+                ids.clubs = response.deck_id;
+            }
+        })
+        .catch(error => console.log('Error', error));
 
-axios.get(ENTIRE_API_URL_DIAMONDS)
-    .then(response => {
-        if (response.success) {
-            diamondsID = response.deck_id;
-        }
-    })
-    .catch(error => console.log('Error', error));
+    axios.get(ENTIRE_API_URL_DIAMONDS)
+        .then(response => {
+            if (response.success) {
+                ids.diamonds = response.deck_id;
+            }
+        })
+        .catch(error => console.log('Error', error));
+}
+window.onload = loadCards;
 
 
 var button = document.createElement("button");
