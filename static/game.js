@@ -188,10 +188,7 @@ button.addEventListener ("click", function() {
                 .then(response => {
                     if (response.data.success) {
                         var imageURL = response.data.cards[0].image;
-                        var img = document.createElement('img');
-                        img.src = imageURL;
-                        img.width = 30;
-                        divRight.appendChild(img);
+                        document.getElementById('cardimage').src = imageURL;
                     }
                     diamondsRemaining = response.data.remaining;
                 })
@@ -202,10 +199,7 @@ button.addEventListener ("click", function() {
                     .then(response => {
                         if (response.data.success) {
                             var imageURL = response.data.cards[0].image;
-                            var img = document.createElement('img');
-                            img.src = imageURL;
-                            img.width = 30;
-                            divRight.appendChild(img);
+                            document.getElementById('cardimage').src = imageURL;
                         }
                         clubsRemaining = response.data.remaining;
                     })
@@ -217,10 +211,7 @@ button.addEventListener ("click", function() {
                             .then(response => {
                                 if (response.data.success) {
                                     var imageURL = response.data.cards[0].image;
-                                    var img = document.createElement('img');
-                                    img.src = imageURL;
-                                    img.width = 30;
-                                    divRight.appendChild(img);
+                                    document.getElementById('cardimage').src = imageURL;
                                     if (response.data.cards[0].code == fsCode) {
                                         frostShepherds = true;
                                     }
