@@ -88,8 +88,9 @@ var diamondsRemaining = 13;
 function loadCards() {
     axios.get(ENTIRE_API_URL_HEARTS)
         .then(response => {
-            ids.hearts = response.data.deck_id;
-            console.log(ids.hearts);
+            if (response.data.success){
+                ids.hearts = response.data.deck_id;
+            }
         })
         .catch(error => console.log('Error', error));
 
@@ -131,14 +132,67 @@ const DRAW_ONE = '/draw/?count=1';
 
 button.addEventListener ("click", function() {
     const ENTIRE_API_URL_DRAW_HEARTS = API_URL + ids.hearts + DRAW_ONE;
-    axios.get(ENTIRE_API_URL_DRAW_HEARTS)
-        .then(response => {
-            if (response.data.success) {
-                var imageURL = response.data.cards[0].image;
-                var img = document.createElement('img');
-                img.src = imageURL;
-                body.appendChild(img);
+    const ENTIRE_API_URL_DRAW_SPADES = API_URL + ids.spades + DRAW_ONE;
+    const ENTIRE_API_URL_DRAW_CLUBS = API_URL + ids.clubs + DRAW_ONE;
+    const ENTIRE_API_URL_DRAW_DIAMONDS = API_URL + ids.diamonds + DRAW_ONE;
+
+    if (heartsRemaining > 0) {
+        axios.get(ENTIRE_API_URL_DRAW_HEARTS)
+            .then(response => {
+                if (response.data.success) {
+                    var imageURL = response.data.cards[0].image;
+                    var img = document.createElement('img');
+                    img.src = imageURL;
+                    img.width = 30;
+                    body.appendChild(img);
+                }
+                heartsRemaining = response.data.remaining;
+            })
+            .catch(error => console.log('Error', error));
+    } else {
+        if (spadesRemaining > 0) {
+            axios.get(ENTIRE_API_URL_DRAW_SPADES)
+                .then(response => {
+                    if (response.data.success) {
+                        var imageURL = response.data.cards[0].image;
+                        var img = document.createElement('img');
+                        img.src = imageURL;
+                        img.width = 30;
+                        body.appendChild(img);
+                    }
+                    spadesRemaining = response.data.remaining;
+                })
+                .catch(error => console.log('Error', error));
+        } else {
+            if (clubsRemaining > 0) {
+                axios.get(ENTIRE_API_URL_DRAW_CLUBS)
+                    .then(response => {
+                        if (response.data.success) {
+                            var imageURL = response.data.cards[0].image;
+                            var img = document.createElement('img');
+                            img.src = imageURL;
+                            img.width = 30;
+                            body.appendChild(img);
+                        }
+                        clubsRemaining = response.data.remaining;
+                    })
+                    .catch(error => console.log('Error', error));
+            } else {
+                if (diamondsRemaining > 0) {
+                    axios.get(ENTIRE_API_URL_DRAW_DIAMONDS)
+                        .then(response => {
+                            if (response.data.success) {
+                                var imageURL = response.data.cards[0].image;
+                                var img = document.createElement('img');
+                                img.src = imageURL;
+                                img.width = 30;
+                                body.appendChild(img);
+                            }
+                            diamondsRemaining = response.data.remaining;
+                        })
+                        .catch(error => console.log('Error', error));
+                }
             }
-        })
-        .catch(error => console.log('Error', error));
+        }
+    }
 });
