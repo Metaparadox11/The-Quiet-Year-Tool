@@ -169,9 +169,7 @@ button.addEventListener ("click", function() {
                         var img = document.createElement('img');
                         img.src = imageURL;
                         img.width = 100;
-                        img.style.display = 'block';
-                        img.style.margin-left = 'auto';
-                        img.style.margin-right = 'auto';
+                        img.style = "display: block; margin-left: auto; margin-right: auto;";
                         img.id = 'cardimage';
                         divRight.appendChild(img);
                         cardImageShown = true;
