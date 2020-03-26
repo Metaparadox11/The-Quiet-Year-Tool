@@ -25,13 +25,13 @@ socket.on('connect', function() {
         } else {
 
         }
-    }
+    });
     //socket.join(rm);
-}
+});
 
 socket.on('disconnect', function() {
     console.log('Disconnected from server');
-}
+});
 
 var pos = {
     x: -1,
