@@ -63,7 +63,7 @@ function loadCards() {
             }
         })
         .catch(error => console.log('Error', error));
-    io.to(rm).emit('cards loaded', ids);
+    socket.emit('cards loaded', ids);
 }
 
 
