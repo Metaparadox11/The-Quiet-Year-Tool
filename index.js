@@ -46,7 +46,7 @@ io.sockets.on('connection', function(socket) {
 
 
   socket.on('new player', function() {
-      console.log('New player joined' + roomName);
+      console.log('New player joined ' + roomName);
     players[socket.id] = {
       x: 0,
       y: 0,

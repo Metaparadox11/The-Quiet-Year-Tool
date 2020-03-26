@@ -8,6 +8,7 @@ var rm;
 function getGet() {
     let params = new URLSearchParams(location.search);
     rm = params.get('roomname');
+    console.log('Room: ' + rm);
     socket.to(rm).emit('new player');
 }
 
@@ -126,7 +127,7 @@ function loadCards() {
             }
         })
         .catch(error => console.log('Error', error));
-    io.to(rm).emit('ids', ids);
+    //io.to(rm).emit('ids', ids);
 }
 window.onload = loadCards;
 
