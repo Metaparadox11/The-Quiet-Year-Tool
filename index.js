@@ -48,7 +48,7 @@ io.sockets.on('connection', function(socket) {
           callback('Room name required.');
       }
       callback();
-  }
+  });
 
   socket.on('new player', function() {
       console.log('New player joined ' + roomName);
