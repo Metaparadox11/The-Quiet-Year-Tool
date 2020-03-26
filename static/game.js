@@ -73,14 +73,17 @@ socket.on('message', function(data) {
 
 socket.on('update ids', function(idsTemp) {
     ids = idsTemp;
+    console.log('New ids: ' + ids);
 });
 
 var sessionActive = false;
 socket.on('session active', function(active) {
     sessionActive = active;
     if (!active) {
+        console.log('Session is active');
         loadCards();
     } else {
+        console.log('Session is new');
         socket.emit('get ids');
     }
 });

@@ -51,11 +51,12 @@ io.sockets.on('connection', function(socket) {
       if (!isRealString(rn)) {
           return callback('Room name required.');
       }
-
-      var clientsTemp = [io];
+      socket.join(rn);
+      
+      var clientsTemp = [];
       io.in(rn).clients((error, clients) => {
           if (error) throw error;
-          console.log(clients);
+          console.log('Current clients: ' + clients);
           clientsTemp = clients;
       });
 
@@ -65,7 +66,7 @@ io.sockets.on('connection', function(socket) {
           io.to(rn).emit('session active', false);
       }
 
-      socket.join(rn);
+
 
       if (typeof roomData.get(rn) === 'undefined') {
           var roomObj = {
