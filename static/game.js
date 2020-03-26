@@ -6,9 +6,10 @@ socket.on('message', function(data) {
   console.log(data);
 });
 
+var rm;
 function getGet() {
     let params = new URLSearchParams(location.search);
-    params.get('roomname') # => "rm"
+    rm = params.get('roomname');
 }
 
 
