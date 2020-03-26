@@ -52,7 +52,7 @@ io.sockets.on('connection', function(socket) {
           return callback('Room name required.');
       }
       socket.join(rn);
-      
+
       var clientsTemp = [];
       io.in(rn).clients((error, clients) => {
           if (error) throw error;
@@ -90,7 +90,7 @@ io.sockets.on('connection', function(socket) {
       roomData.get(rn).currentCard = card;
   });
 
-  socket.on('cards loaded', function(ids) {
+  socket.on('cards loaded', function(rn, ids) {
       roomData.get(rn).ids = ids;
   });
 
