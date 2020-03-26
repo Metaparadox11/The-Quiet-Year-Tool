@@ -52,7 +52,14 @@ io.sockets.on('connection', function(socket) {
           return callback('Room name required.');
       }
 
-      if (io.sockets.clients(rn) > 0) {
+      var clientsTemp;
+      io.of('/').in(rn).clients((error, clients) => {
+          if (error) throw error;
+          console.log(clients);
+          clientsTemp = clients;
+      });
+
+      if (clientsTemp.length > 0) {
           io.to(rn).emit('session active', true);
       } else {
           io.to(rn).emit('session active', false);
