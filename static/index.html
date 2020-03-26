@@ -5,30 +5,19 @@
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
     <style>
-      button {
-          margin-top: 20px;
-          line-height: 60px;
-          font-weight: bold;
-          padding: 0 40px;
-          background: pink;
-          border: none;
-      }
-      button:hover {
-          background: lightpink;
-      }
+
     </style>
 
   </head>
   <body>
     <center>
-        <form>
+        <form action="/page.html" method="get">
           <fieldset>
             <legend>The Quiet Year Tool</legend>
             <label for="roomname">Room Name:</label>
             <input type="text" id="roomname" name="roomname"><br><br>
             <input type="submit" value="Enter Room">
           </fieldset>
-          <button id="newroom">New Room</button>
         </form>
     </center>
   </body>
