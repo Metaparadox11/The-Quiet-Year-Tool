@@ -26,7 +26,7 @@ var roomName;
 app.get('/page', function(request, response) {
     response.render('page', { roomname: request.body.name });
     roomName = request.body.name;
-    socket.join(roomName);
+    io.join(roomName);
 });
 
 server.listen(PORT, () => {
