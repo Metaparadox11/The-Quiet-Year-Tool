@@ -15,7 +15,7 @@ function getGet() {
 
 socket.on('connect', function() {
     console.log('Connected to server');
-    let params = new URLSearchParams(location.search);
+    let params = new URLSearchParams(window.location.search);
     console.log('Room: ' + rm);
 
     socket.emit('join', params, function(err) {
