@@ -73,7 +73,7 @@ socket.on('message', function(data) {
 
 socket.on('update ids', function(idsTemp) {
     ids = idsTemp;
-}
+});
 
 var sessionActive = false;
 socket.on('session active', function(active) {
@@ -83,7 +83,7 @@ socket.on('session active', function(active) {
     } else {
         socket.emit('get ids');
     }
-}
+});
 
 socket.on('connect', function() {
     console.log('Connected to server');
