@@ -21,7 +21,7 @@ app.get('/', function(request, response) {
 });
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
-app.get('/page.html', function(request, response) {
+app.get('/page', function(request, response) {
     response.render(path.join(__dirname, '/static/page.html'), { roomname: request.body.name });
 });
 
