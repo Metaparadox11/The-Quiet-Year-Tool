@@ -82,7 +82,7 @@ io.sockets.on('connection', function(socket) {
       //io.to(rn).emit('session active', true);
       //io.to(rn).emit('update', arg);
 
-      callback();
+      //callback('');
   });
 
   socket.on('update card', function(rn, card) {
