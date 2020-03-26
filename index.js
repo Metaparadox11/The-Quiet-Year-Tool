@@ -91,7 +91,7 @@ io.sockets.on('connection', function(socket) {
   });
 
   socket.on('cards loaded', function(rn, ids) {
-      console.log('Room Data: ' + roomData);
+      console.log('Room Data: ' + roomData.get(rn));
       roomData.get(rn).ids = ids;
   });
 
