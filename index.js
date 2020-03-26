@@ -45,7 +45,7 @@ io.sockets.on('connection', function(socket) {
 
   socket.on('join', (params, callback) => {
       if (!isRealString(params.roomname)) {
-          callback('Room name required.);
+          callback('Room name required.');
       }
       callback();
   }
