@@ -43,8 +43,8 @@ var rooms;
 io.sockets.on('connection', function(socket) {
   var myGameID = ( Math.random() * 100000 ) | 0;
 
-  socket.on('join', (params, callback) => {
-      if (!isRealString(params.roomname)) {
+  socket.on('join', (rn, callback) => {
+      if (!isRealString(rn)) {
           callback('Room name required.');
       }
       callback();

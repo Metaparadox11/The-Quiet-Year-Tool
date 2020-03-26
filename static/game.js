@@ -16,9 +16,10 @@ function getGet() {
 socket.on('connect', function() {
     console.log('Connected to server');
     let params = new URLSearchParams(window.location.search);
-    console.log('Room: ' + rm);
+    const rn = params.get('roomname');
+    console.log('Room: ' + rn);
 
-    socket.emit('join', params, function(err) {
+    socket.emit('join', rn, function(err) {
         if (err) {
             alert(err);
             window.location.href = '/';
