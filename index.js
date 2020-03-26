@@ -23,10 +23,10 @@ app.get('/', function(request, response) {
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
 var roomName;
+
 app.get('/page', function(request, response) {
     response.render('page', { roomname: request.body.name });
     roomName = request.body.name;
-    io.join(roomName);
 });
 
 server.listen(PORT, () => {
@@ -34,8 +34,9 @@ server.listen(PORT, () => {
 });
 
 io.on('connection', function(socket){
-  console.log('New player joined ' + roomName);
+
 });
+
 
 // Add the WebSocket handlers
 var players = {};
@@ -45,7 +46,7 @@ io.sockets.on('connection', function(socket) {
 
 
   socket.on('new player', function() {
-
+      console.log('New player joined ' + roomName);
     players[socket.id] = {
       x: 0,
       y: 0,

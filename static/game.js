@@ -9,7 +9,8 @@ function getGet() {
     let params = new URLSearchParams(location.search);
     rm = params.get('roomname');
     console.log('Room: ' + rm);
-    socket.to(rm).emit('new player');
+    socket.join(rm);
+    socket.to(rm).emit('new player', rm);
 }
 
 
