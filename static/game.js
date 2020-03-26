@@ -168,13 +168,11 @@ button.addEventListener ("click", function() {
                     } else {
                         var img = document.createElement('img');
                         img.src = imageURL;
-                        img.width = 50;
+                        img.width = 100;
+                        img.display = 'block';
+                        img.margin-left = 'auto';
+                        img.margin-right = 'auto';
                         img.id  = 'cardimage';
-                        img.onload = function(){
-                            this.style.position = 'relative';
-                            this.style.align = 'center';
-                            this.style.top = '25%';
-                        }
                         divRight.appendChild(img);
                         cardImageShown = true;
                     }
