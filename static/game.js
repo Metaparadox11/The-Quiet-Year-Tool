@@ -6,6 +6,11 @@ socket.on('message', function(data) {
   console.log(data);
 });
 
+function getGet() {
+    let params = new URLSearchParams(location.search);
+    params.get('roomname') # => "rm"
+}
+
 
 var pos = {
     x: -1,

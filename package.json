@@ -20,6 +20,7 @@
   "homepage": "https://github.com/Metaparadox11/The-Quiet-Year-Tool#readme",
   "dependencies": {
     "axios": "^0.19.2",
+    "body-parser": "^1.19.0",
     "canvas": "^2.6.1",
     "express": "^4.17.1",
     "fabric": "^3.6.3",

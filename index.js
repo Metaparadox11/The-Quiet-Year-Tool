@@ -18,7 +18,12 @@ app.use('/static', express.static(__dirname + '/static'));// Routing
 app.get('/', function(request, response) {
   response.sendFile(path.join(__dirname, '/static/index.html'));
   //response.sendFile(path.join(__dirname, '/index.html'));
-});// Starts the server.
+});
+const bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({ extended: true }));
+app.get('/page.html', function(request, response) {
+    res.render(path.join(__dirname, '/static/page.html'), { roomname: req.body.name });
+});
 
 server.listen(PORT, () => {
     console.log(`Our app is running on port ${ PORT }`);
