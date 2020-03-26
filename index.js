@@ -33,10 +33,9 @@ server.listen(PORT, () => {
     console.log(`Our app is running on port ${ PORT }`);
 });
 
-io.on('connection', function(socket){
-
-});
-
+let isRealString = (str) => {
+    return typeof str === 'string' && str.trim().length > 0;
+}
 
 // Add the WebSocket handlers
 var players = {};
@@ -44,6 +43,12 @@ var rooms;
 io.sockets.on('connection', function(socket) {
   var myGameID = ( Math.random() * 100000 ) | 0;
 
+  socket.on('join', (params, callback) => {
+      if (!isRealString(params.roomname)) {
+          callback('Room name required.);
+      }
+      callback();
+  }
 
   socket.on('new player', function() {
       console.log('New player joined ' + roomName);

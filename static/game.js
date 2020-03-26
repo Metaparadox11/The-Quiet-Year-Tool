@@ -13,6 +13,26 @@ function getGet() {
     socket.to(rm).emit('new player', rm);
 }
 
+socket.on('connect', function() {
+    console.log('Connected to server');
+    let params = new URLSearchParams(location.search);
+    console.log('Room: ' + rm);
+
+    socket.emit('join', params, function(err) {
+        if (err) {
+            alert(err);
+            window.location.href = '/';
+        } else {
+
+        }
+    }
+    //socket.join(rm);
+}
+
+socket.on('disconnect', function() {
+    console.log('Disconnected from server');
+}
+
 var pos = {
     x: -1,
     y: -1,
