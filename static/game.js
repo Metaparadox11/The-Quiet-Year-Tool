@@ -63,6 +63,7 @@ function loadCards() {
             }
         })
         .catch(error => console.log('Error', error));
+    console.log('Loaded these decks: ' + ids + ' in ' + rm);
     socket.emit('cards loaded', rm, ids);
 }
 
