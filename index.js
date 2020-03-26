@@ -22,20 +22,21 @@ app.get('/', function(request, response) {
 });
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
+var roomName;
 app.get('/page', function(request, response) {
     response.render('page', { roomname: request.body.name });
+    roomName = request.body.name;
+    socket.join(roomName);
 });
 
 server.listen(PORT, () => {
     console.log(`Our app is running on port ${ PORT }`);
 });
 
-const nsp = io.of('/my-namespace');
-nsp.on('connection', function(socket){
+io.on('connection', function(socket){
   console.log('someone connected');
-});
-nsp.emit('hi', 'everyone!');
 
+});
 
 // Add the WebSocket handlers
 var players = {};
@@ -45,6 +46,7 @@ io.sockets.on('connection', function(socket) {
 
 
   socket.on('new player', function() {
+      console.log('New player joined' + roomName);
     players[socket.id] = {
       x: 0,
       y: 0,

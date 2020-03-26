@@ -1,6 +1,4 @@
-const socket = io('/my-namespace');
-
-//var socket = io();
+var socket = io();
 
 socket.on('message', function(data) {
   console.log(data);
@@ -10,6 +8,7 @@ var rm;
 function getGet() {
     let params = new URLSearchParams(location.search);
     rm = params.get('roomname');
+    socket.to(rm).emit('new player');
 }
 
 
@@ -46,7 +45,7 @@ document.addEventListener('mouseup', function(event) {
   clicked.c = false;
 });
 
-socket.emit('new player');
+
 setInterval(function() {
   //socket.emit('pos', pos);
   socket.emit('clicked', clicked);
@@ -127,6 +126,7 @@ function loadCards() {
             }
         })
         .catch(error => console.log('Error', error));
+    io.to(rm).emit('ids', ids);
 }
 window.onload = loadCards;
 
