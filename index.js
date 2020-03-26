@@ -8,6 +8,7 @@ var http = require('http');
 var path = require('path');
 var socketIO = require('socket.io');
 const app = express();
+app.set('view engine', 'ejs');
 //var server = http.Server(app);
 //var io = socketIO(server);
 const server = http.createServer(app);
@@ -22,7 +23,7 @@ app.get('/', function(request, response) {
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.get('/page', function(request, response) {
-    response.render(path.join(__dirname, '/static/page.html'), { roomname: request.body.name });
+    response.render('page', { roomname: request.body.name });
 });
 
 server.listen(PORT, () => {
