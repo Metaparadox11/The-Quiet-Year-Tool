@@ -34,8 +34,7 @@ server.listen(PORT, () => {
 });
 
 io.on('connection', function(socket){
-  console.log('someone connected');
-
+  console.log('New player joined ' + roomName);
 });
 
 // Add the WebSocket handlers
@@ -46,7 +45,7 @@ io.sockets.on('connection', function(socket) {
 
 
   socket.on('new player', function() {
-      console.log('New player joined ' + roomName);
+
     players[socket.id] = {
       x: 0,
       y: 0,
