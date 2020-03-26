@@ -39,16 +39,57 @@ let isRealString = (str) => {
 
 // Add the WebSocket handlers
 var players = {};
-var rooms;
+var idsTemp;
+var cardTemp;
+var cardDrawn = false;
+let roomData = new Map();
+
 io.sockets.on('connection', function(socket) {
   var myGameID = ( Math.random() * 100000 ) | 0;
 
-  socket.on('join', (rn, callback) => {
+  socket.on('join', (rn, idsTemp, cardDrawnTemp, cardTemp, callback) => {
       if (!isRealString(rn)) {
-          callback('Room name required.');
+          return callback('Room name required.');
       }
+
+      if (io.sockets.clients(rn) > 0) {
+          io.to(rn).emit('session active', true);
+      } else {
+          io.to(rn).emit('session active', false);
+      }
+
+      socket.join(rn);
+
+      if (typeof roomData.get(rn) === 'undefined') {
+          var roomObj = {
+            ids: idsTemp,
+            cardDrawn: cardDrawnTemp,
+            currentCard: cardTemp
+          };
+          roomData.set(rn, roomObj);
+      } else {
+          var roomObj = roomData.get(rn);
+          //load the room
+      }
+
+      //io.to(rn).emit('session active', true);
+      //io.to(rn).emit('update', arg);
+
       callback();
   });
+
+  socket.on('update card', function(rn, card) {
+      roomData.get(rn).currentCard = card;
+  });
+
+  socket.on('cards loaded', function(ids) {
+      roomData.get(rn).ids = ids;
+  });
+
+  socket.on('get ids', function() {
+      io.to(rn).emit('update ids', roomData.get(rn).ids);
+  });
+
 
   socket.on('new player', function() {
       console.log('New player joined ' + roomName);

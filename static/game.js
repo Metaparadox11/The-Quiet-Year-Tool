@@ -1,25 +1,98 @@
 var socket = io();
 
+var ids = {
+    hearts: '',
+    spades: '',
+    clubs: '',
+    diamonds: ''
+}
+var currentCard;
+var cardDrawn = false;
+
+var rm;
+
+// API specific settings.
+const API_URL = 'https://deckofcardsapi.com/api/deck/';
+
+const NEW_SHUFFLED_DECK = 'new/shuffle/';
+
+const HEARTS_CARDS = '?cards=AH,2H,3H,4H,5H,6H,7H,8H,9H,0H,JH,QH,KH';
+const SPADES_CARDS = '?cards=AS,2S,3S,4S,5S,6S,7S,8S,9S,0S,JS,QS,KS';
+const CLUBS_CARDS = '?cards=AC,2C,3C,4C,5C,6C,7C,8C,9C,0C,JC,QC,KC';
+const DIAMONDS_CARDS = '?cards=AD,2D,3D,4D,5D,6D,7D,8D,9D,0D,JD,QD,KD';
+
+const ENTIRE_API_URL_HEARTS = API_URL + NEW_SHUFFLED_DECK + HEARTS_CARDS;
+const ENTIRE_API_URL_SPADES = API_URL + NEW_SHUFFLED_DECK + SPADES_CARDS;
+const ENTIRE_API_URL_CLUBS = API_URL + NEW_SHUFFLED_DECK + CLUBS_CARDS;
+const ENTIRE_API_URL_DIAMONDS = API_URL + NEW_SHUFFLED_DECK + DIAMONDS_CARDS;
+
+var heartsRemaining = 13;
+var spadesRemaining = 13;
+var clubsRemaining = 13;
+var diamondsRemaining = 13;
+
+function loadCards() {
+    axios.get(ENTIRE_API_URL_HEARTS)
+        .then(response => {
+            if (response.data.success){
+                ids.hearts = response.data.deck_id;
+            }
+        })
+        .catch(error => console.log('Error', error));
+
+    axios.get(ENTIRE_API_URL_SPADES)
+        .then(response => {
+            if (response.data.success) {
+                ids.spades = response.data.deck_id;
+            }
+        })
+        .catch(error => console.log('Error', error));
+
+    axios.get(ENTIRE_API_URL_CLUBS)
+        .then(response => {
+            if (response.data.success) {
+                ids.clubs = response.data.deck_id;
+            }
+        })
+        .catch(error => console.log('Error', error));
+
+    axios.get(ENTIRE_API_URL_DIAMONDS)
+        .then(response => {
+            if (response.data.success) {
+                ids.diamonds = response.data.deck_id;
+            }
+        })
+        .catch(error => console.log('Error', error));
+    io.to(rm).emit('cards loaded', ids);
+}
+
+
 socket.on('message', function(data) {
   console.log(data);
 });
 
-var rm;
-function getGet() {
-    let params = new URLSearchParams(location.search);
-    rm = params.get('roomname');
-    console.log('Room: ' + rm);
-    socket.join(rm);
-    socket.to(rm).emit('new player', rm);
+socket.on('update ids', function(idsTemp) {
+    ids = idsTemp;
+}
+
+var sessionActive = false;
+socket.on('session active', function(active) {
+    sessionActive = active;
+    if (!active) {
+        loadCards();
+    } else {
+        socket.emit('get ids');
+    }
 }
 
 socket.on('connect', function() {
     console.log('Connected to server');
     let params = new URLSearchParams(window.location.search);
     const rn = params.get('roomname');
+    rm = rn;
     console.log('Room: ' + rn);
 
-    socket.emit('join', rn, function(err) {
+    socket.emit('join', rn, ids, cardDrawn, currentCard, function(err) {
         if (err) {
             alert(err);
             window.location.href = '/';
@@ -27,7 +100,7 @@ socket.on('connect', function() {
 
         }
     });
-    //socket.join(rm);
+
 });
 
 socket.on('disconnect', function() {
@@ -89,68 +162,7 @@ socket.on('state', function(players) {
   }
 });
 
-// API specific settings.
-const API_URL = 'https://deckofcardsapi.com/api/deck/';
 
-const NEW_SHUFFLED_DECK = 'new/shuffle/';
-
-const HEARTS_CARDS = '?cards=AH,2H,3H,4H,5H,6H,7H,8H,9H,0H,JH,QH,KH';
-const SPADES_CARDS = '?cards=AS,2S,3S,4S,5S,6S,7S,8S,9S,0S,JS,QS,KS';
-const CLUBS_CARDS = '?cards=AC,2C,3C,4C,5C,6C,7C,8C,9C,0C,JC,QC,KC';
-const DIAMONDS_CARDS = '?cards=AD,2D,3D,4D,5D,6D,7D,8D,9D,0D,JD,QD,KD';
-
-const ENTIRE_API_URL_HEARTS = API_URL + NEW_SHUFFLED_DECK + HEARTS_CARDS;
-const ENTIRE_API_URL_SPADES = API_URL + NEW_SHUFFLED_DECK + SPADES_CARDS;
-const ENTIRE_API_URL_CLUBS = API_URL + NEW_SHUFFLED_DECK + CLUBS_CARDS;
-const ENTIRE_API_URL_DIAMONDS = API_URL + NEW_SHUFFLED_DECK + DIAMONDS_CARDS;
-
-var ids = {
-    hearts: '',
-    spades: '',
-    clubs: '',
-    diamonds: ''
-}
-
-var heartsRemaining = 13;
-var spadesRemaining = 13;
-var clubsRemaining = 13;
-var diamondsRemaining = 13;
-
-function loadCards() {
-    axios.get(ENTIRE_API_URL_HEARTS)
-        .then(response => {
-            if (response.data.success){
-                ids.hearts = response.data.deck_id;
-            }
-        })
-        .catch(error => console.log('Error', error));
-
-    axios.get(ENTIRE_API_URL_SPADES)
-        .then(response => {
-            if (response.data.success) {
-                ids.spades = response.data.deck_id;
-            }
-        })
-        .catch(error => console.log('Error', error));
-
-    axios.get(ENTIRE_API_URL_CLUBS)
-        .then(response => {
-            if (response.data.success) {
-                ids.clubs = response.data.deck_id;
-            }
-        })
-        .catch(error => console.log('Error', error));
-
-    axios.get(ENTIRE_API_URL_DIAMONDS)
-        .then(response => {
-            if (response.data.success) {
-                ids.diamonds = response.data.deck_id;
-            }
-        })
-        .catch(error => console.log('Error', error));
-    //io.to(rm).emit('ids', ids);
-}
-window.onload = loadCards;
 
 // Not working????
 function addCardButton() {
@@ -185,10 +197,11 @@ var cardImageShown = false;
 var fsCode = 'KS';
 
 button.addEventListener ("click", function() {
-    const ENTIRE_API_URL_DRAW_HEARTS = API_URL + ids.hearts + DRAW_ONE;
-    const ENTIRE_API_URL_DRAW_SPADES = API_URL + ids.spades + DRAW_ONE;
-    const ENTIRE_API_URL_DRAW_CLUBS = API_URL + ids.clubs + DRAW_ONE;
-    const ENTIRE_API_URL_DRAW_DIAMONDS = API_URL + ids.diamonds + DRAW_ONE;
+    var ENTIRE_API_URL_DRAW_HEARTS = API_URL + ids.hearts + DRAW_ONE;
+    var ENTIRE_API_URL_DRAW_SPADES = API_URL + ids.spades + DRAW_ONE;
+    var ENTIRE_API_URL_DRAW_CLUBS = API_URL + ids.clubs + DRAW_ONE;
+    var ENTIRE_API_URL_DRAW_DIAMONDS = API_URL + ids.diamonds + DRAW_ONE;
+    cardDrawn = true;
     console.log('Clicked');
     if (heartsRemaining > 0) {
         axios.get(ENTIRE_API_URL_DRAW_HEARTS)
@@ -198,14 +211,15 @@ button.addEventListener ("click", function() {
                     if (cardImageShown){
                         document.getElementById('cardimage').src = imageURL;
                     } else {
-                        var img = document.createElement('img');
-                        img.src = imageURL;
-                        img.width = 100;
-                        img.id = 'cardimage';
-                        divRight.appendChild(img);
-                        document.getElementById('cardimage').style.display = 'block';
-                        document.getElementById('cardimage').style.marginLeft = 'auto';
-                        document.getElementById('cardimage').style.marginRight = 'auto';
+                        //var img = document.createElement('img');
+                        //img.src = imageURL;
+                        //img.width = 100;
+                        //img.id = 'cardimage';
+                        //divRight.appendChild(img);
+                        document.getElementById('cardimage').src = imageURL;
+                        //document.getElementById('cardimage').style.display = 'block';
+                        //document.getElementById('cardimage').style.marginLeft = 'auto';
+                        //document.getElementById('cardimage').style.marginRight = 'auto';
                         cardImageShown = true;
                     }
                 }
@@ -254,4 +268,6 @@ button.addEventListener ("click", function() {
             }
         }
     }
+    currentCard = response.data;
+    io.to(rm).emit('update card', rm, currentCard);
 });
