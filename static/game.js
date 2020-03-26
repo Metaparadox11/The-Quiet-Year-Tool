@@ -169,9 +169,11 @@ button.addEventListener ("click", function() {
                         var img = document.createElement('img');
                         img.src = imageURL;
                         img.width = 100;
-                        img.style = "display: block; margin-left: auto; margin-right: auto;";
                         img.id = 'cardimage';
                         divRight.appendChild(img);
+                        document.getElementById('cardimage').style.display = 'block';
+                        document.getElementById('cardimage').style.margin-left = 'auto';
+                        document.getElementById('cardimage').style.margin-right = 'auto';
                         cardImageShown = true;
                     }
                 }
