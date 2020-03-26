@@ -5,6 +5,9 @@
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
     <style>
+      canvas {
+        border: 1px solid black;
+      }
       button {
           margin-top: 20px;
           line-height: 60px;
@@ -20,17 +23,16 @@
 
   </head>
   <body>
-    <center>
-        <form>
-          <fieldset>
-            <legend>The Quiet Year Tool</legend>
-            <label for="roomname">Room Name:</label>
-            <input type="text" id="roomname" name="roomname"><br><br>
-            <input type="submit" value="Enter Room">
-          </fieldset>
-          <button id="newroom">New Room</button>
-        </form>
-    </center>
+    <div id="divleft" style="position: absolute; width: 800px; height: 600px; left: 10px; top: 10px;">
+        <canvas id="canvas" width="800px" height="600px"></canvas>
+    </div>
+    <div id="divright" style="position: absolute; border: 1px solid black; left: 820px; top: 10px; width: 300px; height: 600px;">
+        <br>
+        <center>
+            <button id="but">Draw Card</button>
+        </center>
+        <br><br>
+    </div>
   </body>
   <script src="/static/game.js"></script>
 </html>
