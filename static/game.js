@@ -12,7 +12,6 @@ function getGet() {
     socket.join(rm);
     socket.to(rm).emit('new player', rm);
 }
-window.onloadstart = getGet;
 
 var pos = {
     x: -1,
