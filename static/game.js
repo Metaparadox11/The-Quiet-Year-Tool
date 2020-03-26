@@ -1,7 +1,11 @@
-var socket = io();
+const socket = io('/my-namespace');
+
+//var socket = io();
+
 socket.on('message', function(data) {
   console.log(data);
 });
+
 
 var pos = {
     x: -1,

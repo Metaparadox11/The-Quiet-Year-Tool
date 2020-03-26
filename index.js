@@ -24,9 +24,20 @@ server.listen(PORT, () => {
     console.log(`Our app is running on port ${ PORT }`);
 });
 
+const nsp = io.of('/my-namespace');
+nsp.on('connection', function(socket){
+  console.log('someone connected');
+});
+nsp.emit('hi', 'everyone!');
+
+
 // Add the WebSocket handlers
 var players = {};
+var rooms;
 io.sockets.on('connection', function(socket) {
+  var myGameID = ( Math.random() * 100000 ) | 0;
+
+
   socket.on('new player', function() {
     players[socket.id] = {
       x: 0,
