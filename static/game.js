@@ -172,8 +172,8 @@ button.addEventListener ("click", function() {
                         img.id = 'cardimage';
                         divRight.appendChild(img);
                         document.getElementById('cardimage').style.display = 'block';
-                        document.getElementById('cardimage').style.margin-left = 'auto';
-                        document.getElementById('cardimage').style.margin-right = 'auto';
+                        document.getElementById('cardimage').style.marginLeft = 'auto';
+                        document.getElementById('cardimage').style.marginRight = 'auto';
                         cardImageShown = true;
                     }
                 }
