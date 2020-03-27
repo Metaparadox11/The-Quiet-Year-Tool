@@ -80,20 +80,20 @@ io.sockets.on('connection', function(socket) {
           }
       });
 
-  });
+      socket.on('update card', function(rn, card) {
+          roomData.get(rn).currentCard = card;
+      });
 
-  io.on('update card', function(rn, card) {
-      roomData.get(rn).currentCard = card;
-  });
+      socket.on('cards loaded', function(rn, ids) {
+          console.log('Room Data: ' + roomData.get(rn));
+          roomData.get(rn).ids = ids;
+      });
 
-  io.on('cards loaded', function(rn, ids) {
-      console.log('Room Data: ' + roomData.get(rn));
-      roomData.get(rn).ids = ids;
-  });
+      socket.on('get ids', function() {
+          console.log('Stored hearts id: ' + roomData.get(rn).ids.hearts);
+          io.to(rn).emit('update ids', roomData.get(rn).ids);
+      });
 
-  io.on('get ids', function() {
-      console.log('Stored hearts id: ' + roomData.get(rn).ids.hearts);
-      io.to(rn).emit('update ids', roomData.get(rn).ids);
   });
 
 
