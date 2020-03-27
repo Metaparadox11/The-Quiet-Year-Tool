@@ -75,7 +75,7 @@ io.sockets.on('connection', function(socket) {
               console.log('Emitting true');
               io.to(rn).emit('session active', true);
           } else {
-              console.log('Emitting false'));
+              console.log('Emitting false');
               io.to(rn).emit('session active', false);
           }
       });
