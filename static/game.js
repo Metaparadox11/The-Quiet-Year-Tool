@@ -60,11 +60,11 @@ function loadCards() {
         .then(response => {
             if (response.data.success) {
                 ids.diamonds = response.data.deck_id;
+                console.log('Loaded this deck: ' + ids.hearts + ' in ' + rm);
+                socket.emit('cards loaded', rm, ids);
             }
         })
         .catch(error => console.log('Error', error));
-    console.log('Loaded these decks: ' + ids + ' in ' + rm);
-    socket.emit('cards loaded', rm, ids);
 }
 
 
@@ -73,7 +73,9 @@ socket.on('message', function(data) {
 });
 
 socket.on('update ids', function(idsTemp) {
+    console.log('idsTemp: ' + idsTemp);
     ids = idsTemp;
+    console.log('ids: ' + ids);
     console.log('New ids: ' + ids);
 });
 

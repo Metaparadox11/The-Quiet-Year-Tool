@@ -92,6 +92,7 @@ io.sockets.on('connection', function(socket) {
   });
 
   io.on('get ids', function() {
+      console.log('Stored hearts id: ' + roomData.get(rn).ids.hearts);
       io.to(rn).emit('update ids', roomData.get(rn).ids);
   });
 
