@@ -86,16 +86,16 @@ io.sockets.on('connection', function(socket) {
       //callback('');
   });
 
-  socket.on('update card', function(rn, card) {
+  io.on('update card', function(rn, card) {
       roomData.get(rn).currentCard = card;
   });
 
-  socket.on('cards loaded', function(rn, ids) {
+  io.on('cards loaded', function(rn, ids) {
       console.log('Room Data: ' + roomData.get(rn));
       roomData.get(rn).ids = ids;
   });
 
-  socket.on('get ids', function() {
+  io.on('get ids', function() {
       io.to(rn).emit('update ids', roomData.get(rn).ids);
   });
 
