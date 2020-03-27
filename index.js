@@ -53,22 +53,6 @@ io.sockets.on('connection', function(socket) {
       }
       socket.join(rn);
 
-      var clientsTemp = [];
-      io.in(rn).clients((error, clients) => {
-          if (error) throw error;
-          console.log('Current clients: ' + clients);
-          clientsTemp = clients;
-      });
-
-      console.log('Number of clients: ' + clientsTemp.length);
-      if (clientsTemp.length > 1) {
-          io.to(rn).emit('session active', true);
-      } else {
-          io.to(rn).emit('session active', false);
-      }
-
-
-
       if (typeof roomData.get(rn) === 'undefined') {
           var roomObj = {
             ids: idsTemp,
@@ -81,10 +65,21 @@ io.sockets.on('connection', function(socket) {
           //load the room
       }
 
-      //io.to(rn).emit('session active', true);
-      //io.to(rn).emit('update', arg);
+      var clientsTemp = [];
+      io.in(rn).clients((error, clients) => {
+          if (error) throw error;
+          console.log('Current clients: ' + clients);
+          clientsTemp = clients;
+          console.log('Number of clients: ' + clientsTemp.length);
+          if (clientsTemp.length > 1) {
+              console.log('Emitting true');
+              io.to(rn).emit('session active', true);
+          } else {
+              console.log('Emitting false'));
+              io.to(rn).emit('session active', false);
+          }
+      });
 
-      //callback('');
   });
 
   io.on('update card', function(rn, card) {
