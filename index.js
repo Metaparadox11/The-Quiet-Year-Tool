@@ -60,6 +60,7 @@ io.sockets.on('connection', function(socket) {
           clientsTemp = clients;
       });
 
+      console.log('Number of clients: ' + clientsTemp.length);
       if (clientsTemp.length > 1) {
           io.to(rn).emit('session active', true);
       } else {

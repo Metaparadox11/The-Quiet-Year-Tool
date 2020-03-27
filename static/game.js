@@ -81,10 +81,10 @@ var sessionActive = false;
 socket.on('session active', function(active) {
     sessionActive = active;
     if (!active) {
-        console.log('Session is active');
+        console.log('Session is new');
         loadCards();
     } else {
-        console.log('Session is new');
+        console.log('Session is active');
         socket.emit('get ids');
     }
 });
