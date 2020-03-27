@@ -229,7 +229,7 @@ button.addEventListener ("click", function() {
                 }
                 heartsRemaining = response.data.remaining;
                 currentCard = response.data;
-                io.to(rm).emit('update card', rm, currentCard);
+                socket.to(rm).emit('update card', rm, currentCard);
             })
             .catch(error => console.log('Error', error));
     } else {
@@ -242,7 +242,7 @@ button.addEventListener ("click", function() {
                     }
                     diamondsRemaining = response.data.remaining;
                     currentCard = response.data;
-                    io.to(rm).emit('update card', rm, currentCard);
+                    socket.to(rm).emit('update card', rm, currentCard);
                 })
                 .catch(error => console.log('Error', error));
         } else {
@@ -255,7 +255,7 @@ button.addEventListener ("click", function() {
                         }
                         clubsRemaining = response.data.remaining;
                         currentCard = response.data;
-                        io.to(rm).emit('update card', rm, currentCard);
+                        socket.to(rm).emit('update card', rm, currentCard);
                     })
                     .catch(error => console.log('Error', error));
             } else {
@@ -272,7 +272,7 @@ button.addEventListener ("click", function() {
                                 }
                                 spadesRemaining = response.data.remaining;
                                 currentCard = response.data;
-                                io.to(rm).emit('update card', rm, currentCard);
+                                socket.to(rm).emit('update card', rm, currentCard);
                             })
                             .catch(error => console.log('Error', error));
                     }
