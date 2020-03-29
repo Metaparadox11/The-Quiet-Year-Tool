@@ -125,8 +125,8 @@ socket.on('connect', function() {
         canvas.clear();
         var context = canvas.getContext('2d');
         context.fillStyle = 'white';
-        for (can in canvasState) {
-            canvas.add(can);
+        for (index = 0; index < canvasState.length; index++) { 
+            canvas.add(canvasState[index]);
         }
       //for (var id in players) {
         //var player = players[id];
