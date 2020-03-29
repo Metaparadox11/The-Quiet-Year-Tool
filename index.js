@@ -83,7 +83,11 @@ io.sockets.on('connection', function(socket) {
           //load the room
       }
 
-      socket.on('send state', function(rn, obj) {
+      socket.on('send canvas', function(rn, canvasobj){
+          io.to(rn).emit('receive canvas', canvasobj);
+      });
+
+      /*socket.on('send state', function(rn, obj) {
           if (typeof canvasStates.get(rn) === 'undefined') {
               var temp = [];
               temp.push(obj);
@@ -98,7 +102,7 @@ io.sockets.on('connection', function(socket) {
               }
               io.to(rn).emit('get state', canvasStates.get(rn));
           }
-      });
+      });*/
 
       socket.on('update card', function(rn, card) {
           roomData.get(rn).currentCard = card;

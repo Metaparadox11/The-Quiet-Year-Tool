@@ -117,7 +117,17 @@ socket.on('connect', function() {
     var context = canvas.getContext('2d');
     context.fillStyle = 'white';
 
+    socket.on('receive canvas', function(canvasobj){
+        canvas.clear();
+        canvas.loadFromJSON(canvasobj, canvas.renderAll.bind(canvas));
+    });
+
     canvas.on('path:created', function(e){
+        var canvasStr = JSON.stringify(canvas);
+        socket.emit('send canvas', rm, canvasStr);
+    });
+
+    /*canvas.on('path:created', function(e){
         console.log('Sending a path ' + e);
         socket.emit('send state', rm, e);
     });
@@ -130,7 +140,7 @@ socket.on('connect', function() {
             console.log('Received array with: ' + canvasState[index]);
             canvas.add(canvasState[index]);
         }
-    });
+    });*/
 
 });
 
