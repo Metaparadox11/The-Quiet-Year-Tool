@@ -128,7 +128,7 @@ socket.on('connect', function() {
         context.fillStyle = 'white';
         for (index = 0; index < canvasState.length; index++) {
             console.log('Received array with: ' + canvasState[index]);
-            canvas.add(canvasState[index]);
+            canvas.add(canvasState[index].path);
         }
     });
 
