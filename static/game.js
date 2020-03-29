@@ -117,11 +117,14 @@ socket.on('connect', function() {
     var context = canvas.getContext('2d');
     context.fillStyle = 'white';
 
-    setInterval(function() {
-        socket.emit('send state', rm, canvas.getObjects());
-    }, 1000 / 60);
+    canvas.on('path:created', function(e){
+        socket.emit('send state', rm, e.path);
+    });
 
     socket.on('get state', function(canvasState) {
+        canvas.clear();
+        var context = canvas.getContext('2d');
+        context.fillStyle = 'white';
         for (can in canvasState) {
             canvas.add(can);
         }
@@ -164,17 +167,10 @@ document.addEventListener('mousemove', function(event) {
   if (clicked.c == false) {
       socket.emit('pos', pos);
   }
-});
-document.addEventListener('mouseup', function(event) {
-  event = event || window.event;
-  pos.xold = -1;
-  pos.yold = -1;
-  socket.emit('pos', pos);
-  clicked.c = false;
-});
+});*/
 
 
-setInterval(function() {
+/*setInterval(function() {
   //socket.emit('pos', pos);
   socket.emit('clicked', clicked);
 }, 10);

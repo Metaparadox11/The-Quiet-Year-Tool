@@ -83,13 +83,15 @@ io.sockets.on('connection', function(socket) {
           //load the room
       }
 
-      socket.on('send state', function(rn, state) {
+      socket.on('send state', function(rn, obj) {
           if (typeof canvasStates.get(rn) === 'undefined') {
-              canvasStates.set(rn, state);
+              let map = new Map();
+              map.add(obj);
+              canvasStates.set(rn, map);
           } else {
               //TODO: combine state with saved state if active
-              var tempState = canvasStates.get(rn);
-              io.to(rn).emit('get state', tempState);
+              canvasStates.get(rn).add(obj);
+              io.to(rn).emit('get state', canvasStates.get(rn));
           }
       });
 
