@@ -46,27 +46,11 @@ let roomData = new Map();
 let canvasStates = new Map();
 
 io.sockets.on('connection', function(socket) {
-  var myGameID = ( Math.random() * 100000 ) | 0;
-
   socket.on('join', (rn, idsTemp, cardDrawnTemp, cardTemp, callback) => {
       if (!isRealString(rn)) {
           return callback('Room name required.');
       }
       socket.join(rn);
-
-      if (typeof roomData.get(rn) === 'undefined') {
-          var roomObj = {
-            ids: idsTemp,
-            cardDrawn: cardDrawnTemp,
-            currentCard: cardTemp
-          };
-          roomData.set(rn, roomObj);
-
-      } else {
-          var roomObj = roomData.get(rn);
-          io.to(rn).emit('change card image', roomObj.currentCard);
-          //load the room
-      }
 
       var clientsTemp = [];
       io.in(rn).clients((error, clients) => {
@@ -84,6 +68,20 @@ io.sockets.on('connection', function(socket) {
 
           }
       });
+
+      if (typeof roomData.get(rn) === 'undefined') {
+          var roomObj = {
+            ids: idsTemp,
+            cardDrawn: cardDrawnTemp,
+            currentCard: cardTemp
+          };
+          roomData.set(rn, roomObj);
+
+      } else {
+          var roomObj = roomData.get(rn);
+          io.to(rn).emit('change card image', roomObj.currentCard);
+          //load the room
+      }
 
       socket.on('send state', function(rn, state) {
           if (typeof canvasStates.get(rn) === 'undefined') {
