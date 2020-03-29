@@ -73,10 +73,11 @@ socket.on('message', function(data) {
 });
 
 socket.on('change card image', function(card) {
-    console.log('Card is: ' + card);
-    if (typeof card === 'undefined') {
+    if (typeof card === 'null') {
+        console.log('Card is: ' + card);
         document.getElementById('cardimage').src = 'https://i.ibb.co/X4XC5ww/blankcard.png';
     } else {
+        console.log('Card is: ' + card);
         document.getElementById('cardimage').src = card.image;
     }
 });
