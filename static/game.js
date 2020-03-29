@@ -123,7 +123,7 @@ socket.on('connect', function() {
     });
 
     canvas.on('path:created', function(e){
-        var canvasStr = JSON.stringify(canvas);
+        var canvasStr = canvas.toJSON();
         socket.emit('send canvas', rm, canvasStr);
     });
 
