@@ -118,8 +118,8 @@ socket.on('connect', function() {
     context.fillStyle = 'white';
 
     canvas.on('path:created', function(e){
-        console.log('Sending a path ' + e.path);
-        socket.emit('send state', rm, e.path);
+        console.log('Sending a path ' + e);
+        socket.emit('send state', rm, e);
     });
 
     socket.on('get state', function(canvasState) {
@@ -128,7 +128,7 @@ socket.on('connect', function() {
         context.fillStyle = 'white';
         for (index = 0; index < canvasState.length; index++) {
             console.log('Received array with: ' + canvasState[index]);
-            canvas.add(canvasState[index].path);
+            canvas.add(canvasState[index]);
         }
     });
 

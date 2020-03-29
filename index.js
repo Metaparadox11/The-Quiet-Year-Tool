@@ -86,12 +86,12 @@ io.sockets.on('connection', function(socket) {
       socket.on('send state', function(rn, obj) {
           if (typeof canvasStates.get(rn) === 'undefined') {
               var temp = [];
-              temp.push(obj.path);
+              temp.push(obj);
               canvasStates.set(rn, temp);
               console.log('Received path and created array with: ' + temp[0]);
           } else {
               //TODO: combine state with saved state if active
-              canvasStates.get(rn).push(obj.path);
+              canvasStates.get(rn).push(obj);
               for (var i = 0; i < canvasStates.get(rn); i++) {
                   console.log('Received path and pushed to array with: ' + canvasStates.get(rn)[i]);
               }
