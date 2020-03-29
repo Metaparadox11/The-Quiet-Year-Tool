@@ -118,7 +118,7 @@ socket.on('connect', function() {
     context.fillStyle = 'white';
 
     canvas.on('path:created', function(e){
-        console.log('Sending a path ' + e);
+        console.log('Sending a path ' + e.path);
         socket.emit('send state', rm, e.path);
     });
 
