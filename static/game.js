@@ -217,25 +217,16 @@ button.addEventListener ("click", function() {
         axios.get(ENTIRE_API_URL_DRAW_HEARTS)
             .then(response => {
                 if (response.data.success) {
-                    var imageURL = response.data.cards[0].image;
+                    //var imageURL = response.data.cards[0].image;
                     if (cardImageShown){
-                        document.getElementById('cardimage').src = imageURL;
+                        //document.getElementById('cardimage').src = imageURL;
                     } else {
-                        //var img = document.createElement('img');
-                        //img.src = imageURL;
-                        //img.width = 100;
-                        //img.id = 'cardimage';
-                        //divRight.appendChild(img);
-                        document.getElementById('cardimage').src = imageURL;
-                        //document.getElementById('cardimage').style.display = 'block';
-                        //document.getElementById('cardimage').style.marginLeft = 'auto';
-                        //document.getElementById('cardimage').style.marginRight = 'auto';
+                        //document.getElementById('cardimage').src = imageURL;
                         cardImageShown = true;
                     }
+                    heartsRemaining = response.data.remaining;
+                    socket.emit('update card', rm, response.data.cards[0]);
                 }
-                heartsRemaining = response.data.remaining;
-                currentCard = response.data;
-                socket.emit('update card', rm, currentCard);
             })
             .catch(error => console.log('Error', error));
     } else {
@@ -243,12 +234,11 @@ button.addEventListener ("click", function() {
             axios.get(ENTIRE_API_URL_DRAW_DIAMONDS)
                 .then(response => {
                     if (response.data.success) {
-                        var imageURL = response.data.cards[0].image;
-                        document.getElementById('cardimage').src = imageURL;
+                        //var imageURL = response.data.cards[0].image;
+                        //document.getElementById('cardimage').src = imageURL;
+                        diamondsRemaining = response.data.remaining;
+                        socket.emit('update card', rm, response.data.cards[0]);
                     }
-                    diamondsRemaining = response.data.remaining;
-                    currentCard = response.data;
-                    socket.emit('update card', rm, currentCard);
                 })
                 .catch(error => console.log('Error', error));
         } else {
@@ -256,12 +246,11 @@ button.addEventListener ("click", function() {
                 axios.get(ENTIRE_API_URL_DRAW_CLUBS)
                     .then(response => {
                         if (response.data.success) {
-                            var imageURL = response.data.cards[0].image;
-                            document.getElementById('cardimage').src = imageURL;
+                            //var imageURL = response.data.cards[0].image;
+                            //document.getElementById('cardimage').src = imageURL;
+                            clubsRemaining = response.data.remaining;
+                            socket.emit('update card', rm, response.data.cards[0]);
                         }
-                        clubsRemaining = response.data.remaining;
-                        currentCard = response.data;
-                        socket.emit('update card', rm, currentCard);
                     })
                     .catch(error => console.log('Error', error));
             } else {
@@ -270,15 +259,14 @@ button.addEventListener ("click", function() {
                         axios.get(ENTIRE_API_URL_DRAW_SPADES)
                             .then(response => {
                                 if (response.data.success) {
-                                    var imageURL = response.data.cards[0].image;
-                                    document.getElementById('cardimage').src = imageURL;
+                                    //var imageURL = response.data.cards[0].image;
+                                    //document.getElementById('cardimage').src = imageURL;
+                                    spadesRemaining = response.data.remaining;
+                                    socket.emit('update card', rm, response.data.cards[0]);
                                     if (response.data.cards[0].code == fsCode) {
                                         frostShepherds = true;
                                     }
                                 }
-                                spadesRemaining = response.data.remaining;
-                                currentCard = response.data;
-                                socket.emit('update card', rm, currentCard);
                             })
                             .catch(error => console.log('Error', error));
                     }
