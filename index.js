@@ -73,7 +73,7 @@ io.sockets.on('connection', function(socket) {
           var roomObj = {
             ids: idsTemp,
             cardDrawn: cardDrawnTemp,
-            currentCard: cardTemp
+            currentCard: 'https://i.ibb.co/X4XC5ww/blankcard.png'
           };
           roomData.set(rn, roomObj);
 

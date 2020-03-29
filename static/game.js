@@ -7,6 +7,7 @@ var ids = {
     diamonds: ''
 }
 var currentCard;
+var currentCardDefined = false;
 var cardDrawn = false;
 
 var rm;
@@ -73,13 +74,7 @@ socket.on('message', function(data) {
 });
 
 socket.on('change card image', function(card) {
-    if (typeof card === 'null') {
-        console.log('Card is: ' + card);
-        document.getElementById('cardimage').src = 'https://i.ibb.co/X4XC5ww/blankcard.png';
-    } else {
-        console.log('Card is: ' + card);
-        document.getElementById('cardimage').src = card.image;
-    }
+    document.getElementById('cardimage').src = card.image;
 });
 
 socket.on('update ids', function(idsTemp) {
@@ -108,7 +103,7 @@ socket.on('connect', function() {
     rm = rn;
     console.log('Room: ' + rn);
 
-    socket.emit('join', rn, ids, cardDrawn, currentCard, function(err) {
+    socket.emit('join', rn, ids, cardDrawn, currentCard, currentCardDefined, function(err) {
         if (err) {
             alert(err);
             window.location.href = '/';
@@ -230,6 +225,7 @@ button.addEventListener ("click", function() {
         axios.get(ENTIRE_API_URL_DRAW_HEARTS)
             .then(response => {
                 if (response.data.success) {
+                    currentCardDefined = true;
                     if (!cardImageShown){
                         cardImageShown = true;
                     }
