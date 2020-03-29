@@ -88,11 +88,13 @@ io.sockets.on('connection', function(socket) {
               var temp = [];
               temp.push(obj);
               canvasStates.set(rn, temp);
-              console.log('Received path and created array: ' + temp);
+              console.log('Received path and created array with: ' + temp[0]);
           } else {
               //TODO: combine state with saved state if active
               canvasStates.get(rn).push(obj);
-              console.log('Received path and pushed to array: ' + canvasStates.get(rn));
+              for (var i = 0; i < canvasStates.get(rn); i++) {
+                  console.log('Received path and pushed to array with: ' + canvasStates.get(rn)[i]);
+              }
               io.to(rn).emit('get state', canvasStates.get(rn));
           }
       });
