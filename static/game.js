@@ -73,7 +73,11 @@ socket.on('message', function(data) {
 });
 
 socket.on('change card image', function(card) {
-  document.getElementById('cardimage').src = card.image;
+    if (typeof card === 'undefined') {
+        document.getElementById('cardimage').src = 'https://i.ibb.co/X4XC5ww/blankcard.png';
+    } else {
+        document.getElementById('cardimage').src = card.image;
+    }
 });
 
 socket.on('update ids', function(idsTemp) {
