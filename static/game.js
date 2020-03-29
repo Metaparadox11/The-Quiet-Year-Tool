@@ -126,6 +126,7 @@ socket.on('connect', function() {
         canvas.clear();
         var context = canvas.getContext('2d');
         context.fillStyle = 'white';
+        console.log('Received array: ' + canvasState);
         for (index = 0; index < canvasState.length; index++) {
             canvas.add(canvasState[index]);
         }
