@@ -82,6 +82,7 @@ io.sockets.on('connection', function(socket) {
 
       socket.on('update card', function(rn, card) {
           roomData.get(rn).currentCard = card;
+          io.to(rn).emit('change card image', card);
       });
 
       socket.on('cards loaded', function(rn, ids) {

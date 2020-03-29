@@ -72,6 +72,10 @@ socket.on('message', function(data) {
   console.log(data);
 });
 
+socket.on('change card image', function(card) {
+  document.getElementById('cardimage').src = card.image;
+});
+
 socket.on('update ids', function(idsTemp) {
     console.log('idsTemp: ' + idsTemp);
     ids = idsTemp;
