@@ -62,6 +62,7 @@ io.sockets.on('connection', function(socket) {
           roomData.set(rn, roomObj);
       } else {
           var roomObj = roomData.get(rn);
+          io.to(rn).emit('change card image', roomObj.currentCard);
           //load the room
       }
 
