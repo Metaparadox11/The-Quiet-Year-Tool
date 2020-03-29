@@ -43,6 +43,7 @@ var idsTemp;
 var cardTemp;
 var cardDrawn = false;
 let roomData = new Map();
+let canvasStates = new Map();
 
 io.sockets.on('connection', function(socket) {
   var myGameID = ( Math.random() * 100000 ) | 0;
@@ -60,6 +61,7 @@ io.sockets.on('connection', function(socket) {
             currentCard: cardTemp
           };
           roomData.set(rn, roomObj);
+
       } else {
           var roomObj = roomData.get(rn);
           io.to(rn).emit('change card image', roomObj.currentCard);
@@ -72,12 +74,24 @@ io.sockets.on('connection', function(socket) {
           console.log('Current clients: ' + clients);
           clientsTemp = clients;
           console.log('Number of clients: ' + clientsTemp.length);
+          // TODO: throw out client if # clients is > 4
           if (clientsTemp.length > 1) {
               console.log('Emitting true');
               io.to(rn).emit('session active', true);
           } else {
               console.log('Emitting false');
               io.to(rn).emit('session active', false);
+
+          }
+      });
+
+      socket.on('send state', function(rn, state) {
+          if (typeof canvasStates.get(rn) === 'undefined') {
+              canvasStates.set(rn, state);
+          } else {
+              //TODO: combine state with saved state if active
+              var tempState = canvasStates.get(rn);
+              io.to(rn).emit('get state', tempState);
           }
       });
 
@@ -98,8 +112,7 @@ io.sockets.on('connection', function(socket) {
 
   });
 
-
-  socket.on('new player', function() {
+  /*socket.on('new player', function() {
       console.log('New player joined ' + roomName);
     players[socket.id] = {
       x: 0,
@@ -123,7 +136,5 @@ io.sockets.on('connection', function(socket) {
       player.yold = player.y;
       player.y = data.y;
     }
-  });
-});setInterval(function() {
-  io.sockets.emit('state', players);
-}, 1000 / 60);
+});*/
+});

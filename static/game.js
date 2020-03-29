@@ -111,13 +111,36 @@ socket.on('connect', function() {
         }
     });
 
+    var canvas = new fabric.Canvas('canvas', {
+        isDrawingMode: true
+    });
+    var context = canvas.getContext('2d');
+    context.fillStyle = 'white';
+
+    setInterval(function() {
+        socket.emit('send state', rm, canvas.getObjects());
+    }, 1000 / 60);
+
+    socket.on('get state', function(canvasState) {
+        for (can in canvasState) {
+            canvas.add(can);
+        }
+      //for (var id in players) {
+        //var player = players[id];
+        //if (player.c) {
+        //    console.log('drawing');
+
+        //}
+      //}
+    });
+
 });
 
 socket.on('disconnect', function() {
     console.log('Disconnected from server');
 });
 
-var pos = {
+/*var pos = {
     x: -1,
     y: -1,
     xold: -1,
@@ -155,24 +178,7 @@ setInterval(function() {
   //socket.emit('pos', pos);
   socket.emit('clicked', clicked);
 }, 10);
-
-//var canvas = document.getElementById('canvas');
-var canvas = new fabric.Canvas('canvas', {
-    isDrawingMode: false
-});
-var context = canvas.getContext('2d');
-socket.on('state', function(players) {
-  context.fillStyle = 'white';
-  for (var id in players) {
-    var player = players[id];
-    if (player.c) {
-        console.log('drawing');
-
-    }
-  }
-});
-
-
+*/
 
 // Not working????
 function addCardButton() {
@@ -217,11 +223,7 @@ button.addEventListener ("click", function() {
         axios.get(ENTIRE_API_URL_DRAW_HEARTS)
             .then(response => {
                 if (response.data.success) {
-                    //var imageURL = response.data.cards[0].image;
-                    if (cardImageShown){
-                        //document.getElementById('cardimage').src = imageURL;
-                    } else {
-                        //document.getElementById('cardimage').src = imageURL;
+                    if (!cardImageShown){
                         cardImageShown = true;
                     }
                     heartsRemaining = response.data.remaining;
@@ -234,8 +236,6 @@ button.addEventListener ("click", function() {
             axios.get(ENTIRE_API_URL_DRAW_DIAMONDS)
                 .then(response => {
                     if (response.data.success) {
-                        //var imageURL = response.data.cards[0].image;
-                        //document.getElementById('cardimage').src = imageURL;
                         diamondsRemaining = response.data.remaining;
                         socket.emit('update card', rm, response.data.cards[0]);
                     }
@@ -246,8 +246,6 @@ button.addEventListener ("click", function() {
                 axios.get(ENTIRE_API_URL_DRAW_CLUBS)
                     .then(response => {
                         if (response.data.success) {
-                            //var imageURL = response.data.cards[0].image;
-                            //document.getElementById('cardimage').src = imageURL;
                             clubsRemaining = response.data.remaining;
                             socket.emit('update card', rm, response.data.cards[0]);
                         }
@@ -259,8 +257,6 @@ button.addEventListener ("click", function() {
                         axios.get(ENTIRE_API_URL_DRAW_SPADES)
                             .then(response => {
                                 if (response.data.success) {
-                                    //var imageURL = response.data.cards[0].image;
-                                    //document.getElementById('cardimage').src = imageURL;
                                     spadesRemaining = response.data.remaining;
                                     socket.emit('update card', rm, response.data.cards[0]);
                                     if (response.data.cards[0].code == fsCode) {
