@@ -117,8 +117,9 @@ socket.on('connect', function() {
     var context = canvas.getContext('2d');
     context.fillStyle = 'white';
 
-    canvas.on('path:created', function(options){
-        socket.emit('send state', rm, options.e.path);
+    canvas.on('path:created', function(e){
+        console.log('Sending a path ' + e);
+        socket.emit('send state', rm, e.path);
     });
 
     socket.on('get state', function(canvasState) {
@@ -128,13 +129,6 @@ socket.on('connect', function() {
         for (index = 0; index < canvasState.length; index++) {
             canvas.add(canvasState[index]);
         }
-      //for (var id in players) {
-        //var player = players[id];
-        //if (player.c) {
-        //    console.log('drawing');
-
-        //}
-      //}
     });
 
 });
