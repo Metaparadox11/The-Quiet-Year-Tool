@@ -33,7 +33,7 @@ var clubsRemaining = 13;
 var diamondsRemaining = 13;
 
 function loadCards() {
-    cardDrawn = false;
+    //cardDrawn = false;
     axios.get(ENTIRE_API_URL_HEARTS)
         .then(response => {
             if (response.data.success){
@@ -150,6 +150,8 @@ socket.on('connect', function() {
 
 socket.on('disconnect', function() {
     console.log('Disconnected from server');
+    socket.emit('delete');
+    // If this is the last person leaving, delete everything
 });
 
 /*var pos = {

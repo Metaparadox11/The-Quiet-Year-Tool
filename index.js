@@ -120,6 +120,18 @@ io.sockets.on('connection', function(socket) {
           io.to(rn).emit('update ids', roomData.get(rn).ids);
       });
 
+      socket.on('delete', function() {
+          io.in(rn).clients((error, clients) => {
+              if (error) throw error;
+
+              if (clients.length === 0) {
+                  console.log('0 clients in room ' + rn);
+                  roomData.delete(rn);
+                  canvasStates.delete(rn);
+              }
+          });
+      });
+
   });
 
   /*socket.on('new player', function() {
