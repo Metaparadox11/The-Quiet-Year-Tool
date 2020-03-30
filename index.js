@@ -123,7 +123,7 @@ io.sockets.on('connection', function(socket) {
       socket.on('delete', function() {
           io.in(rn).clients((error, clients) => {
               if (error) throw error;
-
+              console.log(clients.length + ' clients in room ' + rn + ' ' + clients);
               if (clients.length === 0) {
                   console.log('0 clients in room ' + rn);
                   roomData.delete(rn);
