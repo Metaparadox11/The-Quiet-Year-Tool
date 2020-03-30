@@ -33,6 +33,7 @@ var clubsRemaining = 13;
 var diamondsRemaining = 13;
 
 function loadCards() {
+    cardDrawn = false;
     axios.get(ENTIRE_API_URL_HEARTS)
         .then(response => {
             if (response.data.success){
@@ -105,7 +106,7 @@ socket.on('connect', function() {
     rm = rn;
     console.log('Room: ' + rn);
 
-    socket.emit('join', rn, ids, cardDrawn, currentCard, currentCardDefined, function(err) {
+    socket.emit('join', rn, ids, cardDrawn, currentCard, function(err) {
         if (err) {
             alert(err);
             window.location.href = '/';
@@ -227,7 +228,6 @@ button.addEventListener ("click", function() {
         axios.get(ENTIRE_API_URL_DRAW_HEARTS)
             .then(response => {
                 if (response.data.success) {
-                    currentCardDefined = true;
                     if (!cardImageShown){
                         cardImageShown = true;
                     }

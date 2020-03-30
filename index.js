@@ -46,7 +46,7 @@ let roomData = new Map();
 let canvasStates = new Map();
 
 io.sockets.on('connection', function(socket) {
-  socket.on('join', (rn, idsTemp, cardDrawnTemp, cardTemp, currentCardDefined, callback) => {
+  socket.on('join', (rn, idsTemp, cardDrawnTemp, cardTemp, callback) => {
       if (!isRealString(rn)) {
           return callback('Room name required.');
       }
@@ -79,8 +79,8 @@ io.sockets.on('connection', function(socket) {
 
       } else {
           var roomObj = roomData.get(rn);
-          io.to(rn).emit('change card image', roomObj.currentCard, currentCardDefined);
-          
+          io.to(rn).emit('change card image', roomObj.currentCard, roomObj.cardDrawn);
+
       }
 
       socket.on('send canvas', function(rn, canvasobj){
@@ -106,7 +106,8 @@ io.sockets.on('connection', function(socket) {
 
       socket.on('update card', function(rn, card) {
           roomData.get(rn).currentCard = card;
-          io.to(rn).emit('change card image', card);
+          roomData.get(rn).cardDrawn = true;
+          io.to(rn).emit('change card image', card, true);
       });
 
       socket.on('cards loaded', function(rn, ids) {
