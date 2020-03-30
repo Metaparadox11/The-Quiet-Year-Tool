@@ -59,12 +59,19 @@ io.sockets.on('connection', function(socket) {
           clientsTemp = clients;
           console.log('Number of clients: ' + clientsTemp.length);
           // TODO: throw out client if # clients is > 4
+          if (clientsTemp.length > 4) return callback('Limit 4 players per room.');
           if (clientsTemp.length > 1) {
               console.log('Emitting true');
               io.to(rn).emit('session active', true);
           } else {
-              console.log('Emitting false');
-              io.to(rn).emit('session active', false);
+              // if roomData exists for rn emit true
+              if (typeof roomData.get(rn) !== 'undefined') {
+                  console.log('emitting true');
+                  io.to(rn).emit('session active', true);
+              } else {
+                  console.log('Emitting false');
+                  io.to(rn).emit('session active', false);
+              }
 
           }
       });
