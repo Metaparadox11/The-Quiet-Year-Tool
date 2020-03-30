@@ -74,21 +74,22 @@ io.sockets.on('connection', function(socket) {
               }
 
           }
+
+          if (typeof roomData.get(rn) === 'undefined') {
+              var roomObj = {
+                ids: idsTemp,
+                cardDrawn: cardDrawnTemp,
+                currentCard: cardTemp
+              };
+              roomData.set(rn, roomObj);
+
+          } else {
+              var roomObj = roomData.get(rn);
+              io.to(rn).emit('change card image', roomObj.currentCard, roomObj.cardDrawn);
+
+          }
       });
 
-      if (typeof roomData.get(rn) === 'undefined') {
-          var roomObj = {
-            ids: idsTemp,
-            cardDrawn: cardDrawnTemp,
-            currentCard: cardTemp
-          };
-          roomData.set(rn, roomObj);
-
-      } else {
-          var roomObj = roomData.get(rn);
-          io.to(rn).emit('change card image', roomObj.currentCard, roomObj.cardDrawn);
-
-      }
 
       socket.on('send canvas', function(rn, canvasobj){
           io.to(rn).emit('receive canvas', canvasobj);
