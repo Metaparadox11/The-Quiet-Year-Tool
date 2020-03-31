@@ -92,7 +92,14 @@ io.sockets.on('connection', function(socket) {
 
 
       socket.on('send canvas', function(rn, canvasobj){
+          canvasStates.get(rn) = canvasObj;
           io.to(rn).emit('receive canvas', canvasobj);
+      });
+
+      socket.on('load canvas', function(rn) {
+          if (typeof canvasStates.get(rn) !== 'undefined') {
+              io.to(rn).emit('receive canvas', canvasStates.get(rn));
+          }
       });
 
       /*socket.on('send state', function(rn, obj) {

@@ -122,6 +122,8 @@ socket.on('connect', function() {
     });
     c = canvas;
 
+    socket.emit('load canvas', rm);
+
     c.on('path:created', function(e){
         var canvasStr = c.toJSON();
         socket.emit('send canvas', rm, canvasStr);
