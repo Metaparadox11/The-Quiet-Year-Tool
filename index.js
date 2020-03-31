@@ -92,7 +92,7 @@ io.sockets.on('connection', function(socket) {
 
 
       socket.on('send canvas', function(rn, canvasobj){
-          canvasStates.get(rn) = canvasObj;
+          canvasStates.set(rn, canvasObj);
           io.to(rn).emit('receive canvas', canvasobj);
       });
 
