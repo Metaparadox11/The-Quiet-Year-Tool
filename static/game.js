@@ -99,6 +99,7 @@ socket.on('session active', function(active) {
     }
 });
 
+var c;
 socket.on('connect', function() {
     console.log('Connected to server');
     let params = new URLSearchParams(window.location.search);
@@ -116,20 +117,12 @@ socket.on('connect', function() {
     });
 
     var canvas = new fabric.Canvas('canvas', {
-        isDrawingMode: true
+        isDrawingMode: true,
+        fillStyle: 'white'
     });
-    var context = canvas.getContext('2d');
-    context.fillStyle = 'white';
-
-    socket.on('receive canvas', function(canvasobj){
-        canvas.clear();
-        canvas.loadFromJSON(canvasobj, canvas.renderAll.bind(canvas));
-    });
-
-    canvas.on('path:created', function(e){
-        var canvasStr = canvas.toJSON();
-        socket.emit('send canvas', rm, canvasStr);
-    });
+    c = canvas;
+    //var context = canvas.getContext('2d');
+    //context.fillStyle = 'white';
 
     /*canvas.on('path:created', function(e){
         console.log('Sending a path ' + e);
@@ -146,6 +139,16 @@ socket.on('connect', function() {
         }
     });*/
 
+});
+
+socket.on('receive canvas', function(canvasobj){
+    c.clear();
+    c.loadFromJSON(canvasobj, c.renderAll.bind(c));
+});
+
+c.on('path:created', function(e){
+    var canvasStr = c.toJSON();
+    socket.emit('send canvas', rm, canvasStr);
 });
 
 socket.on('disconnect', function() {
