@@ -121,6 +121,11 @@ socket.on('connect', function() {
         fillStyle: 'white'
     });
     c = canvas;
+
+    c.on('path:created', function(e){
+        var canvasStr = c.toJSON();
+        socket.emit('send canvas', rm, canvasStr);
+    });
     //var context = canvas.getContext('2d');
     //context.fillStyle = 'white';
 
@@ -144,11 +149,6 @@ socket.on('connect', function() {
 socket.on('receive canvas', function(canvasobj){
     c.clear();
     c.loadFromJSON(canvasobj, c.renderAll.bind(c));
-});
-
-c.on('path:created', function(e){
-    var canvasStr = c.toJSON();
-    socket.emit('send canvas', rm, canvasStr);
 });
 
 socket.on('disconnect', function() {
