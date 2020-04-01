@@ -140,6 +140,12 @@ io.sockets.on('connection', function(socket) {
           }
       });
 
+      socket.on('return token', function(rn, tokens, user) {
+          contemptTokens.set(rn, contemptTokens.get(rn) + tokens);
+          ctPerRoom.get(rn)[user] = ctPerRoom.get(rn)[user] - tokens;
+          io.to(rn).emit('tokens left', contemptTokens.get(rn));
+      });
+
       socket.on('get tokens', function(id, user) {
           if (typeof ctPerRoom.get(rn) !== 'undefined') {
               if (Number.isInteger(ctPerRoom.get(rn)[usr])) {

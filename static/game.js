@@ -33,6 +33,8 @@ var spadesRemaining = 13;
 var clubsRemaining = 13;
 var diamondsRemaining = 13;
 
+var tokensTaken = 0;
+
 function loadCards() {
     //cardDrawn = false;
     axios.get(ENTIRE_API_URL_HEARTS)
@@ -235,6 +237,7 @@ var fsCode = 'KS';
 // Token: https://i.ibb.co/Y3WjFZC/token.png
 
 var tokenButton = document.getElementById('taketoken');
+var returnButton = document.getElementById('returntoken');
 
 var tokensGone = false;
 socket.on('tokens gone', function() {
@@ -248,12 +251,24 @@ socket.on('tokens left', function(tokensLeft) {
 
 tokenButton.addEventListener("click", function() {
     if (!tokensGone) {
+        tokensTaken += 1;
         socket.emit('take token', rm, 1, user);
         tokenImagesSpan.innerHTML += "<img src=https://i.ibb.co/Y3WjFZC/token.png width=40px />";
     }
 });
 
+
+returnButton.addEventListener("click", function() {
+    if (tokensTaken >= 1) {
+        tokensTaken -= 1;
+        socket.emit('return token', rm, 1, user);
+        tokenImagesSpan.innerHTML -= "<img src=https://i.ibb.co/Y3WjFZC/token.png width=40px />";
+    }
+});
+
+
 socket.on('load tokens', function(tokens, tokensLeft) {
+    tokensTaken = tokens;
     var tokenPool = document.getElementById('tokenpool');
     tokenPool.innerHTML = 'Contempt Tokens in Pool: ' + tokensLeft;
     tokenImagesSpan.innerHTML = "";
