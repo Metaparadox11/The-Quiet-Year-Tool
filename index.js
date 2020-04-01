@@ -204,7 +204,7 @@ io.sockets.on('connection', function(socket) {
       io.in(rm).clients((error, clients) => {
           if (error) throw error;
           console.log(clients.length + ' clients in room ' + rm + ' ' + clients);
-          if (clients.length <== 1) {
+          if (clients.length <= 1) {
               console.log('0 clients in room ' + rm);
               roomData.delete(rm);
               canvasStates.delete(rm);
