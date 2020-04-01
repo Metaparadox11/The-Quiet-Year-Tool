@@ -247,7 +247,7 @@ socket.on('tokens left', function(tokensLeft) {
 tokenButton.addEventListener("click", function() {
     if (!tokensGone) {
         socket.emit('take token', rm, 1, user);
-        tokenImagesSpan.innerHTML += "<img src=https://i.ibb.co/Y3WjFZC/token.png width=50px />";
+        tokenImagesSpan.innerHTML += "<img src=https://i.ibb.co/Y3WjFZC/token.png width=40px />";
     }
 });
 
