@@ -263,7 +263,7 @@ returnButton.addEventListener("click", function() {
     if (tokensTaken >= 1) {
         console.log('Getting img' + tokensTaken);
         var imgTemp = document.getElementById('img' + tokensTaken);
-        imageTemp.parentNode.removeChild(imageTemp);
+        imgTemp.parentNode.removeChild(imgTemp);
         tokensTaken -= 1;
         socket.emit('return token', rm, 1, user);
     }
