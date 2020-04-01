@@ -189,18 +189,22 @@ io.sockets.on('connection', function(socket) {
           io.to(rn).emit('update ids', roomData.get(rn).ids);
       });
 
-      socket.on('delete', function() {
-          io.in(rn).clients((error, clients) => {
-              if (error) throw error;
-              console.log(clients.length + ' clients in room ' + rn + ' ' + clients);
-              if (clients.length === 0) {
-                  console.log('0 clients in room ' + rn);
-                  roomData.delete(rn);
-                  canvasStates.delete(rn);
-              }
-          });
-      });
 
+
+  });
+
+  socket.on('delete', function(rm) {
+      io.in(rm).clients((error, clients) => {
+          if (error) throw error;
+          console.log(clients.length + ' clients in room ' + rm + ' ' + clients);
+          if (clients.length === 0) {
+              console.log('0 clients in room ' + rm);
+              roomData.delete(rm);
+              canvasStates.delete(rm);
+              contemptTokens.delete(rm);
+              ctPerRoom.delete(rm);
+          }
+      });
   });
 
   /*socket.on('new player', function() {

@@ -164,7 +164,7 @@ socket.on('receive canvas', function(canvasobj){
 
 socket.on('disconnect', function() {
     console.log('Disconnected from server');
-    socket.emit('delete');
+    socket.emit('delete', rm);
     // If this is the last person leaving, delete everything
 });
 
