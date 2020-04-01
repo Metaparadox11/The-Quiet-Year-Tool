@@ -254,14 +254,15 @@ tokenButton.addEventListener("click", function() {
     if (!tokensGone) {
         tokensTaken += 1;
         socket.emit('take token', rm, 1, user);
-        tokenImagesSpan.innerHTML += "<img src=https://i.ibb.co/Y3WjFZC/token.png width=40px id=" + tokensTaken + " />";
+        tokenImagesSpan.innerHTML += "<img src=https://i.ibb.co/Y3WjFZC/token.png width=40px id=img" + tokensTaken + " />";
     }
 });
 
 
 returnButton.addEventListener("click", function() {
     if (tokensTaken >= 1) {
-        var imgTemp = document.getElementById('${tokensTaken}');
+        console.log('Getting img' + tokensTaken);
+        var imgTemp = document.getElementById('img' + tokensTaken);
         imageTemp.parentNode.removeChild(imageTemp);
         tokensTaken -= 1;
         socket.emit('return token', rm, 1, user);
@@ -275,7 +276,7 @@ socket.on('load tokens', function(tokens, tokensLeft) {
     tokenPool.innerHTML = 'Contempt Tokens in Pool: ' + tokensLeft;
     tokenImagesSpan.innerHTML = "";
     for (var i = 0; i < tokens; i++) {
-            tokenImagesSpan.innerHTML += "<img src=https://i.ibb.co/Y3WjFZC/token.png width=40px id=" + tokensTaken + " />";
+            tokenImagesSpan.innerHTML += "<img src=https://i.ibb.co/Y3WjFZC/token.png width=40px id=img" + tokensTaken + " />";
     }
 });
 
