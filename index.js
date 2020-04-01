@@ -45,6 +45,7 @@ var cardDrawn = false;
 let roomData = new Map();
 let canvasStates = new Map();
 let contemptTokens = new Map();
+let ctPerRoom = new Map();
 
 io.sockets.on('connection', function(socket) {
   socket.on('join', (rn, usr, idsTemp, cardDrawnTemp, cardTemp, callback) => {
