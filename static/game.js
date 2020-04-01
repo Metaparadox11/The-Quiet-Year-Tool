@@ -237,7 +237,7 @@ var tokenButton = document.getElementById('taketoken');
 var tokensGone = false;
 socket.on('tokens gone', function() {
     tokensGone = true;
-}
+});
 
 tokenButton.addEventListener("click", function() {
     if (!tokensGone) {
