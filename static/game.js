@@ -256,6 +256,7 @@ tokenButton.addEventListener("click", function() {
 socket.on('load tokens', function(tokens, tokensLeft) {
     var tokenPool = document.getElementById('tokenpool');
     tokenPool.innerHTML = 'Contempt Tokens in Pool: ' + tokensLeft;
+    tokenImagesSpan.innerHTML = "";
     for (var i = 0; i < tokens; i++) {
         tokenImagesSpan.innerHTML += "<img src=https://i.ibb.co/Y3WjFZC/token.png width=40px />";
     }
