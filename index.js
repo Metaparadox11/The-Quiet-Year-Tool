@@ -59,7 +59,7 @@ io.sockets.on('connection', function(socket) {
       if (!isRealString(usr)) {
           return callback('Username required.');
       }
-      if (isActiveUser(ctPerRoom.get(rn)[user])) {
+      if (isActiveUser(ctPerRoom.get(rn)[usr])) {
           return callback('Username taken.');
       }
       socket.join(rn);
