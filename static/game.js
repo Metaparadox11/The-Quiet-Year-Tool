@@ -247,6 +247,11 @@ socket.on('tokens gone', function() {
 socket.on('tokens left', function(tokensLeft) {
     var tokenPool = document.getElementById('tokenpool');
     tokenPool.innerHTML = 'Contempt Tokens in Pool: ' + tokensLeft;
+    // test code
+    tokenImagesSpan.innerHTML = "";
+    for (var i = 0; i < tokens; i++) {
+        tokenImagesSpan.innerHTML += "<img src=https://i.ibb.co/Y3WjFZC/token.png width=40px />";
+    }
 });
 
 tokenButton.addEventListener("click", function() {
@@ -262,7 +267,6 @@ returnButton.addEventListener("click", function() {
     if (tokensTaken >= 1) {
         tokensTaken -= 1;
         socket.emit('return token', rm, 1, user);
-        tokenImagesSpan.innerHTML -= "<img src=https://i.ibb.co/Y3WjFZC/token.png width=40px />";
     }
 });
 
