@@ -37,6 +37,10 @@ let isRealString = (str) => {
     return typeof str === 'string' && str.trim().length > 0;
 }
 
+let isActiveUser = (num) => {
+    return isInteger(num);
+}
+
 // Add the WebSocket handlers
 var players = {};
 var idsTemp;
@@ -54,6 +58,9 @@ io.sockets.on('connection', function(socket) {
       }
       if (!isRealString(usr)) {
           return callback('Username required.');
+      }
+      if (isActiveUser(ctPerRoom.get(rn)[user])) {
+          return callback('Username taken.');
       }
       socket.join(rn);
 
@@ -128,6 +135,14 @@ io.sockets.on('connection', function(socket) {
               io.to(rn).emit('tokens left', 0);
           } else {
               io.to(rn).emit('tokens gone');
+          }
+      });
+
+      socket.on('get tokens', function(id, user) {
+          if (isActiveUser(ctPerRoom.get(rn)[user])) {
+              io.to(id).emit('load tokens', ctPerRoom.get(rn)[user], contemptTokens.get(rn));
+          } else {
+              io.to(id).emit('load tokens', 0, contemptTokens.get(rn));
           }
       });
 

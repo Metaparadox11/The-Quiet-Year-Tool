@@ -99,6 +99,7 @@ socket.on('session active', function(active) {
     } else {
         console.log('Session is active');
         socket.emit('get ids');
+        socket.emit('get tokens', socket.id, user);
     }
 });
 
@@ -247,6 +248,13 @@ socket.on('tokens left', function(tokensLeft) {
 tokenButton.addEventListener("click", function() {
     if (!tokensGone) {
         socket.emit('take token', rm, 1, user);
+        tokenImagesSpan.innerHTML += "<img src=https://i.ibb.co/Y3WjFZC/token.png width=40px />";
+    }
+});
+
+socket.on('load tokens', function(tokens, tokensLeft) {
+    tokenPool.innerHTML = 'Contempt Tokens in Pool: ' + tokensLeft;
+    for (var i = 0; i < tokens; i++) {
         tokenImagesSpan.innerHTML += "<img src=https://i.ibb.co/Y3WjFZC/token.png width=40px />";
     }
 });
