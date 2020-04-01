@@ -50,6 +50,7 @@ let roomData = new Map();
 let canvasStates = new Map();
 let contemptTokens = new Map();
 let ctPerRoom = new Map();
+let users = new Map();
 
 io.sockets.on('connection', function(socket) {
   socket.on('join', (rn, usr, idsTemp, cardDrawnTemp, cardTemp, callback) => {
@@ -59,12 +60,18 @@ io.sockets.on('connection', function(socket) {
       if (!isRealString(usr)) {
           return callback('Username required.');
       }
-      if (typeof ctPerRoom.get(rn) !== 'undefined') {
-          if (Number.isInteger(ctPerRoom.get(rn)[usr])) {
+      if (typeof users.get(rn) !== 'undefined') {
+          if (Number.isInteger(users.get(rn)[usr])) {
               return callback('Username taken.');
+          } else {
+              users.get(rn).push(usr);
           }
+      } else {
+          users.set(rn, []);
+          users.get(rn).push(usr);
       }
       socket.join(rn);
+
 
       var clientsTemp = [];
       io.in(rn).clients((error, clients) => {
@@ -197,7 +204,7 @@ io.sockets.on('connection', function(socket) {
       io.in(rm).clients((error, clients) => {
           if (error) throw error;
           console.log(clients.length + ' clients in room ' + rm + ' ' + clients);
-          if (clients.length === 0) {
+          if (clients.length <== 1) {
               console.log('0 clients in room ' + rm);
               roomData.delete(rm);
               canvasStates.delete(rm);
