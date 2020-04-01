@@ -143,9 +143,9 @@ io.sockets.on('connection', function(socket) {
       socket.on('get tokens', function(id, user) {
           if (typeof ctPerRoom.get(rn) !== 'undefined') {
               if (Number.isInteger(ctPerRoom.get(rn)[usr])) {
-                  io.broadcast.to(id).emit('load tokens', ctPerRoom.get(rn)[user], contemptTokens.get(rn));
+                  io.to('${id}').emit('load tokens', ctPerRoom.get(rn)[user], contemptTokens.get(rn));
               } else {
-                  io.broadcast.to(id).emit('load tokens', 0, contemptTokens.get(rn));
+                  io.to('${id}').emit('load tokens', 0, contemptTokens.get(rn));
               }
           }
       });
