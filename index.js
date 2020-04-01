@@ -44,11 +44,15 @@ var cardTemp;
 var cardDrawn = false;
 let roomData = new Map();
 let canvasStates = new Map();
+let contemptTokens = new Map();
 
 io.sockets.on('connection', function(socket) {
-  socket.on('join', (rn, idsTemp, cardDrawnTemp, cardTemp, callback) => {
+  socket.on('join', (rn, usr, idsTemp, cardDrawnTemp, cardTemp, callback) => {
       if (!isRealString(rn)) {
           return callback('Room name required.');
+      }
+      if (!isRealString(usr)) {
+          return callback('Username required.');
       }
       socket.join(rn);
 
@@ -99,6 +103,28 @@ io.sockets.on('connection', function(socket) {
       socket.on('load canvas', function(rn) {
           if (typeof canvasStates.get(rn) !== 'undefined') {
               io.to(rn).emit('receive canvas', canvasStates.get(rn));
+          }
+      });
+
+      socket.on('base tokens', function(rn) {
+          contemptTokens.set(rn, 20);
+          ctPerRoom.set(rn, {});
+      });
+
+      socket.on('tokens per user', function(rn, user) {
+          ctPerRoom.get(rn)[user] = 0;
+      });
+
+      socket.on('take token', function(rn, tokens, user) {
+          if (contemptTokens.get(rn) > 1) {
+              contemptTokens.set(rn, contemptTokens.get(rn) - tokens);
+              ctPerRoom.get(rn)[user] = ctPerRoom.get(rn)[user] + tokens;
+          } else if (contemptTokens.get(rn) == 1) {
+              contemptTokens.set(rn, contemptTokens.get(rn) - tokens);
+              ctPerRoom.get(rn)[user] = ctPerRoom.get(rn)[user] + tokens;
+              io.to(rn).emit('tokens gone');
+          } else {
+              io.to(rn).emit('tokens gone');
           }
       });
 

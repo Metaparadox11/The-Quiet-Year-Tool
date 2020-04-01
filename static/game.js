@@ -11,6 +11,7 @@ var currentCardDefined = false;
 var cardDrawn = false;
 
 var rm;
+var user;
 
 // API specific settings.
 const API_URL = 'https://deckofcardsapi.com/api/deck/';
@@ -92,6 +93,8 @@ socket.on('session active', function(active) {
     sessionActive = active;
     if (!active) {
         console.log('Session is new');
+        socket.emit('base tokens', rm);
+        socket.emit('tokens per user', rm, user);
         loadCards();
     } else {
         console.log('Session is active');
@@ -104,10 +107,12 @@ socket.on('connect', function() {
     console.log('Connected to server');
     let params = new URLSearchParams(window.location.search);
     const rn = params.get('roomname');
+    const usr = params.get('username');
     rm = rn;
+    user = usr;
     console.log('Room: ' + rn);
 
-    socket.emit('join', rn, ids, cardDrawn, currentCard, function(err) {
+    socket.emit('join', rn, usr, ids, cardDrawn, currentCard, function(err) {
         if (err) {
             alert(err);
             window.location.href = '/';
@@ -217,12 +222,29 @@ var divRight = document.getElementById('divright');
 var divLeft = document.getElementById('divleft');
 
 var button = document.getElementById('but');
+var tokenImagesSpan = document.getElementById('tokenimages');
 
 const DRAW_ONE = '/draw/?count=1';
 
 var frostShepherds = false;
 var cardImageShown = false;
 var fsCode = 'KS';
+
+// Token: https://i.ibb.co/Y3WjFZC/token.png
+
+var tokenButton = document.getElementById('taketoken');
+
+var tokensGone = false;
+socket.on('tokens gone', function() {
+    tokensGone = true;
+}
+
+tokenButton.addEventListener("click", function() {
+    if (!tokensGone) {
+        socket.emit('take token', rm, 1, user);
+        tokenImagesSpan.innerHTML += "<img src=https://i.ibb.co/Y3WjFZC/token.png width=50px />";
+    }
+});
 
 button.addEventListener ("click", function() {
     var ENTIRE_API_URL_DRAW_HEARTS = API_URL + ids.hearts + DRAW_ONE;
