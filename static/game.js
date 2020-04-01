@@ -99,8 +99,8 @@ socket.on('session active', function(active) {
     } else {
         console.log('Session is active');
         socket.emit('get ids');
-        console.log('Getting tokens for: ' + socket.sessionid);
-        socket.emit('get tokens', socket.sessionid, user);
+        console.log('Getting tokens for: ' + socket.id);
+        socket.emit('get tokens', socket.id, user);
     }
 });
 
