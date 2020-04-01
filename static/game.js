@@ -239,6 +239,11 @@ socket.on('tokens gone', function() {
     tokensGone = true;
 });
 
+socket.on('tokens left', function(tokensLeft) {
+    var tokenPool = document.getElementById('tokenpool');
+    tokenPool.innerHTML = 'Contempt Tokens in Pool: ' + tokensLeft;
+});
+
 tokenButton.addEventListener("click", function() {
     if (!tokensGone) {
         socket.emit('take token', rm, 1, user);

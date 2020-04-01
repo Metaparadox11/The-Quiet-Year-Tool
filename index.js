@@ -120,10 +120,12 @@ io.sockets.on('connection', function(socket) {
           if (contemptTokens.get(rn) > 1) {
               contemptTokens.set(rn, contemptTokens.get(rn) - tokens);
               ctPerRoom.get(rn)[user] = ctPerRoom.get(rn)[user] + tokens;
+              io.to(rn).emit('tokens left', ctPerRoom.get(rn)[user]);
           } else if (contemptTokens.get(rn) == 1) {
               contemptTokens.set(rn, contemptTokens.get(rn) - tokens);
               ctPerRoom.get(rn)[user] = ctPerRoom.get(rn)[user] + tokens;
               io.to(rn).emit('tokens gone');
+              io.to(rn).emit('tokens left', 0);
           } else {
               io.to(rn).emit('tokens gone');
           }
