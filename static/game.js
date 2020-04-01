@@ -41,6 +41,8 @@ function loadCards() {
         .then(response => {
             if (response.data.success){
                 ids.hearts = response.data.deck_id;
+            } else {
+                console.log('Failed to load hearts deck.');
             }
         })
         .catch(error => console.log('Error', error));
@@ -49,6 +51,8 @@ function loadCards() {
         .then(response => {
             if (response.data.success) {
                 ids.spades = response.data.deck_id;
+            } else {
+                console.log('Failed to load spades deck.');
             }
         })
         .catch(error => console.log('Error', error));
@@ -57,6 +61,8 @@ function loadCards() {
         .then(response => {
             if (response.data.success) {
                 ids.clubs = response.data.deck_id;
+            } else {
+                console.log('Failed to load clubs deck.');
             }
         })
         .catch(error => console.log('Error', error));
@@ -67,6 +73,8 @@ function loadCards() {
                 ids.diamonds = response.data.deck_id;
                 console.log('Loaded this deck: ' + ids.hearts + ' in ' + rm);
                 socket.emit('cards loaded', rm, ids);
+            } else {
+                console.log('Failed to load diamonds deck.');
             }
         })
         .catch(error => console.log('Error', error));
