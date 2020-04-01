@@ -38,7 +38,7 @@ let isRealString = (str) => {
 }
 
 let isActiveUser = (num) => {
-    return isInteger(num);
+    return Number.isInteger(num);
 }
 
 // Add the WebSocket handlers
@@ -141,10 +141,12 @@ io.sockets.on('connection', function(socket) {
       });
 
       socket.on('get tokens', function(id, user) {
-          if (isActiveUser(ctPerRoom.get(rn)[user])) {
-              io.to(id).emit('load tokens', ctPerRoom.get(rn)[user], contemptTokens.get(rn));
-          } else {
-              io.to(id).emit('load tokens', 0, contemptTokens.get(rn));
+          if (typeof ctPerRoom.get(rn) !== 'undefined') {
+              if (Number.isInteger(ctPerRoom.get(rn)[usr])) {
+                  io.to(id).emit('load tokens', ctPerRoom.get(rn)[user], contemptTokens.get(rn));
+              } else {
+                  io.to(id).emit('load tokens', 0, contemptTokens.get(rn));
+              }
           }
       });
 
