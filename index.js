@@ -61,10 +61,10 @@ io.sockets.on('connection', function(socket) {
           return callback('Username required.');
       }
       if (typeof users.get(rn) !== 'undefined') {
-          if (Number.isInteger(users.get(rn)[usr])) {
+          if (users.get(rn).includes(usr)) {
               return callback('Username taken.');
           } else {
-              users.get(rn).push(usr);
+             users.get(rn).push(usr);
           }
       } else {
           users.set(rn, []);
@@ -204,7 +204,7 @@ io.sockets.on('connection', function(socket) {
       io.in(rm).clients((error, clients) => {
           if (error) throw error;
           console.log(clients.length + ' clients in room ' + rm + ' ' + clients);
-          if (clients.length <= 1) {
+          if (clients.length < 1) {
               console.log('0 clients in room ' + rm);
               roomData.delete(rm);
               canvasStates.delete(rm);
