@@ -107,7 +107,8 @@ socket.on('session active', function(active) {
 });
 
 var c;
-socket.on('connect', function() {
+// changed socket.on to socket.once
+socket.once('connect', function() {
     console.log('Connected to server');
     let params = new URLSearchParams(window.location.search);
     const rn = params.get('roomname');
